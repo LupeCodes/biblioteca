@@ -37,8 +37,8 @@
         			</tr>
         			<?php foreach($libros as $libro){?>
         				<tr>
-        					<td><a href='/Libro/show/<?=$libro->id?>'><?=$libro->isbn?></a></td>
-        					<td><?=$libro->titulo?></td>
+        					<td><?=$libro->isbn?></td>
+        					<td><a href='/Libro/show/<?=$libro->id?>'><?=$libro->titulo?></a></td>
         					<td><?=$libro->autor?></td>
         					<td><?=$libro->editorial?></td>
         					<td><a href='/Libro/show/<?=$libro->id?>'>Ver</a>
@@ -50,8 +50,14 @@
         		</table>
         	<?php }else{ ?>
         		<div class="danger p2">
-        			
+        			<p>No hay libros que mostrar</p>
         		</div>
+        	<?php } ?>
+        	
+        	<div class="centered">
+        		<a class="button" onclick="history.back()">Atrás</a>
+        	</div>
 		</main>
+		<?= $template->footer() ?>
 	</body>
 </html>
