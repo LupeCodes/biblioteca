@@ -157,7 +157,10 @@ class Base implements TemplateInterface{
         // parte izquierda (operaciones para todos los usuarios)
         $html = "<menu class='menu'>";
         $html .=   "<li><a href='/'>Inicio</a></li>";
-        $html .=   "<li><a href='/Example'>Ejemplos de maquetación</a></li>";
+        $html .=   "<li><a href='/Libro'>Lista de Libros</a></li>";
+        $html .=   "<li><a href='/Libro/create'>Nuevo Libro</a></li>";
+        $html .=   "<li><a href='/Socio'>Lista de Socios</a></li>";
+        $html .=   "<li><a href='/Socio/create'>Nuevo Socio</a></li>";
           
         // parte derecha (solamente para usuarios concretos)
  
