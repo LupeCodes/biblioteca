@@ -49,6 +49,9 @@
         			<?php } ?>
         		</table>
         	<?php }else{ ?>
+        		<div class="danger p2">
+        			
+        		</div>
 		</main>
 	</body>
 </html>
