@@ -11,12 +11,13 @@ class LibroController extends Controller{
     public function list(){
         
         //recupera todos los libros y los ordena por id
-        $libros = Libro::all(); 
+        //$libros = Libro::all(); 
         
         //para ordenarlos por titulo, por ejemplo, sería así:
-        //$libros = Libro::orderBy('titulo','ASC');
+        $libros = Libro::orderBy('titulo','ASC');
         
         //carga la vista que los muestra
+        //el view es un helper
         return view('libro/list',[
             'libros' => $libros
         ]);
@@ -42,5 +43,161 @@ class LibroController extends Controller{
         return view('libro/create');
     }
     
+    
+    //METODO STORE----------------------------------------------
+    public function store(){
+        
+        //comprueba que la petición venga del formulario
+        if(!request()->has('guardar'))
+            //si la request NO tiene guardar lanza una excepcion
+            throw new FormException('No se recibió el formulario');
+        
+        $libro = new Libro();   //creamos el nuevo Libro
+        
+        //toma los datos que llegan por POST
+        //en la configuracion, las cadenas vacias las guarda como null
+        //para poner un valor por defecto seria asi
+        //y en la vista pondrias un condicional, y que si es menor que 0, pues no imprima nada
+        $libro->paginas             =request()->post('paginas' ?? -1);
+        $libro->isbn                =request()->post('isbn');
+        $libro->titulo              =request()->post('titulo');
+        $libro->editorial           =request()->post('editorial');
+        $libro->autor               =request()->post('autor');
+        $libro->idioma              =request()->post('idioma');
+        $libro->edicion             =request()->post('edicion');
+        $libro->anyo                =request()->post('anyo');
+        $libro->edadrecomendada     =request()->post('edadrecomendada');
+        //$libro->paginas             =request()->post('paginas');
+        $libro->caracteristicas     =request()->post('caracteristicas');
+        $libro->sinopsis            =request()->post('sinopsis');
+        
+        //intenta guardar el libro. En caso de que la insercion falle
+        //vamos a evitar ir a la página de error y volveremos
+        //al formulario "nuevo libro"
+        try{
+            //guarda el libro en la base de datos
+            $libro->save();
+            
+            //flashea un mensaje de éxito en la sesión
+            Session::success("Guardado del libro $libro->titulo correcto");
+            
+            //redirecciona a los detalles del libro que hemos guardado
+            return redirect("/Libro/show/$libro->id");
+        
+        //si falla el guardado del libro nos venimos al catch
+        }catch(SQLException $e){
+            
+            //flashea un mensaje de error en sesión
+            Session::error("No se pudo guardar el libro $libro->titulo");
+
+            //si está en modo DEBUG vuelve a lanzar la excepcion
+            //esto hará que acabemos en la página de error
+            if(DEBUG)
+                throw new SQLException($e->getMessage());
+            
+            //regresa al formulario de creación de libro
+            //los valores no deberían haberse borrado si usamos los helpers old()
+            return redirect("/Libro/create");
+        }
+    }//FIN DE FUNCION STORE
+    
+    
+    //STORE------------------------------------------------------------
+    public function edit(int $id = 0){
+        
+        //busca el libro con ese ID
+        $libro = Libro::findOrFail($id, "No se encontró el libro");
+        
+        //retornamos una ViewResponse con la vista con el formulario de edicion
+        return view('libro/edit', [
+            'libro' => $libro
+        ]);
+    }
+    
+    
+    //METODO UPDATE-----------------------------------------------------
+    public function update(){
+        
+        //si no llega el formulario...
+        if(!request()->has('actualizar'))
+            //lanza la excepcion
+            throw new FormException('No se recibieron datos');
+        
+        $id = intval(request()->post('id'));    //recuperar el id vía POST
+        
+        $libro = Libro::findOrFail($id, "No se ha encontrado el libro.");
+        
+        //recuperar el resto de campos
+        $libro->paginas             = request()->post('paginas' ?? -1);
+        $libro->isbn                = request()->post('isbn');
+        $libro->titulo              = request()->post('titulo');
+        $libro->editorial           = request()->post('editorial');
+        $libro->autor               = request()->post('autor');
+        $libro->idioma              = request()->post('idioma');
+        $libro->edicion             = request()->post('edicion');
+        $libro->anyo                = request()->post('anyo');
+        $libro->edadrecomendada     = request()->post('edadrecomendada');
+        //$libro->paginas             = request()->post('paginas');
+        $libro->caracteristicas     = request()->post('caracteristicas');
+        $libro->sinopsis            = request()->post('sinopsis');
+        
+        //intentamos actualizar el libro
+        try{
+            $libro->update();
+            Session::success("Actualización del libro $libro->titulo correcta.");
+            return redirect("/Libro/edit/$id");
+            
+        //si se produce un error al guardar el libro
+        }catch(SQLException $e){
+            
+            Session::error("Hubo errores en la actualización del libro $libro->titulo");
+            
+            if(DEBUG)
+                throw new SQLException($e->getMessage());
+            
+            return redirect("/Libro/edit/$id");
+        }
+        
+    }
+    
+    
+    
+    //METODO DELETE--------------------------------------------
+    public function delete(int $id = 0){
+        
+        $libro = Libro::findOrFail($id, "No existe el libro");
+        
+        return view('libro/delete', [
+            'libro' => $libro
+        ]);
+    }
+    
+    
+    
+    
+    //METODO DESTROY----------------------------------------------------------
+    public function destroy(){
+        
+        //comprueba que llega el formulario de confirmación
+        if(!request()->has('borrar'))
+            throw new FormException('No se recibió la confirmación');
+        
+        //recupera el identificador (id)
+        $id     = intval(request()->post('id'));
+        //con el id, recuperamos el libro
+        $libro  = Libro::findOrFail($id);
+        
+        //si el libro tiene ejemplares, no permitiremos su borrados
+        //más adelante, ocultaremos el botón borrar en estos casos
+        //para que el usuario no llegue al formulario de confirmación
+        if($libro->hasAny('Ejemplar'))
+            throw new Exception("No se puede borrar el libro mientras tenga ejemplares");
+        
+        //intentamos borrar el libro
+            try{
+                $libro->deleteObject();
+                Session::success("Se ha borrado el libro $libro->titulo. Estarás contento");
+            }
+    }
     
 }//FIN DE LA CLASE

@@ -22,8 +22,8 @@
 		<?= $template->header('Detalles del libro ', $libro->titulo) ?>
 		<?= $template->menu() ?>
 		<?= $template->breadCrumbs([
-		    'Libros' => 'Libro/list',
-		    $libro->titulo => 'Libro/show'
+		    'Libros' => '/Libro/list',
+		    $libro->titulo => null
 		    //'Detalles del libro' => 'Libro/show'
 		]) ?>
 		<?= $template->messages() ?>
@@ -42,7 +42,9 @@
         		<p><b>Edad Recomendada:</b>
         			<?=$libro->edadrecomendada ? $libro->edadrecomendada : 'TP'?></p>
         		<p><b>Año:</b>				<?=$libro->anyo ?? '--'?></p>
-        		<p><b>Páginas:</b>			<?=$libro->paginas ?? '--'?></p>
+        		
+        		<!-- poner condicional para que no deje poner numero negativo en las paginas -->
+        		<p><b>Páginas:</b>			<?=($libro->paginas>0) ? $libro->paginas : '--'?></p>
         		<p><b>Características:</b>	<?=$libro->caracteristicas ?? '--'?></p>	
 			</section>
 			

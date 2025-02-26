@@ -22,8 +22,8 @@
 		<?= $template->header('Detalles del libro ', $libro->titulo) ?>
 		<?= $template->menu() ?>
 		<?= $template->breadCrumbs([
-		    'Libros' => 'Libro/list',
-		    $libro->titulo => 'Libro/show'
+		    'Libros' => '/Libro/list',
+		    'Nuevo Libro' => null
 		    //'Detalles del libro' => 'Libro/show'
 		]) ?>
 		<?= $template->messages() ?>
@@ -81,7 +81,7 @@
     			</div>			
 			</form>
 			
-			<div clas="centrado my2">
+			<div class="centrado my2">
 				<a class="button" onclick="history.back()">Atrás</a>
 				<a class="button" href="/libro/list">Lista de libros</a>
 			</div>
