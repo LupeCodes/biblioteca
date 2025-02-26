@@ -10,7 +10,7 @@
 		<meta name="author" content="Lupe Jiménez">
 		
 		<!-- FAVICON -->
-		<link rel="shortcut icon" href="/favicon.icon" type="image/png">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/png">
 		
 		<!-- CSS -->
 		<?= $template->css() ?>

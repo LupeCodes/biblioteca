@@ -10,7 +10,7 @@
 		<meta name="author" content="Lupe Jiménez">
 		
 		<!-- FAVICON -->
-		<link rel="shortcut icon" href="/favicon.icon" type="image/png">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/png">
 		
 		<!-- CSS -->
 		<?= $template->css() ?>
@@ -30,7 +30,7 @@
 		
 		<main>
 			<h1><?= APP_NAME ?></h1>
-			<h2>Nuevo libro</h2>
+			<h2>Editar libro</h2>
 			
 			<form method="POST" action="/libro/update">
 			     <!-- input oculto que contiene el id del libro a actualizar -->

@@ -102,7 +102,7 @@ class LibroController extends Controller{
     }//FIN DE FUNCION STORE
     
     
-    //STORE------------------------------------------------------------
+    //EDIT------------------------------------------------------------
     public function edit(int $id = 0){
         
         //busca el libro con ese ID
@@ -197,6 +197,17 @@ class LibroController extends Controller{
             try{
                 $libro->deleteObject();
                 Session::success("Se ha borrado el libro $libro->titulo. Estarás contento");
+                return redirect("/Libro/list");
+                
+            //si se produce unerror en la operacion con la BDD salta el catch    
+            }catch(SQLException $e){
+                
+                Session::error("No se pudo borrar el libro $libro->titulo");
+
+                if(DEBUG)
+                    throw new SQLException($e->getMessage());
+                
+                return redirect("/Libro/delete/$id");    
             }
     }
     

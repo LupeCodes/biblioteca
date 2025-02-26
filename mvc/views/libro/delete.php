@@ -10,7 +10,7 @@
 		<meta name="author" content="Lupe Jiménez">
 		
 		<!-- FAVICON -->
-		<link rel="shortcut icon" href="/favicon.icon" type="image/png">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/png">
 		
 		<!-- CSS -->
 		<?= $template->css() ?>
@@ -36,7 +36,16 @@
 				<p>Confirmar el borrado del libro <b><?= $libro->titulo ?></b>.</p>
 				
 				<input type="hidden"  name="id" value="<?= $libro->id ?>">
-				<input class="button-danger" type="submit" name="borrar" value="Borrar">
+				
+				<?php 
+				if (!$libro->hasAny('Ejemplar')){ ?>
+				    
+				  <input class="button-danger" type="submit" name="borrar" value="Borrar">  
+				    
+				<?php } ?>
+				
+				
+				
 			</form>
 			
 			<div class="centered">
