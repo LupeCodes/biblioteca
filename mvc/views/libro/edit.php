@@ -88,13 +88,27 @@
 			</form>
 			
 			<section>
+				<script>
+					function confirmar(id){
+						if(confirm('¿Seguro que deseas eliminar?'))
+							location.href = '/Ejemplar/destroy/'+id
+					}
+				</script>
+			
 				<h3>Ejemplares del libro <b><?=$libro->titulo?></b></h3>
-				<a class="button" href="/Ejemplar/create<?= $libro->id ?>">
+				<a class="button" href="/Ejemplar/create/<?= $libro->id ?>">
         			Nuevo Ejemplar
         		</a>
+        		
+        		<?php 
+        		  if(!$ejemplares){
+        		    echo "<div class='warning p2'><p>No hay ejemplares de este libro.</p></div>";
+        		  }else{
+        		?>
+        		
 				<table class="table w100 centered-block">
         			<tr>
-        				<th>ID</th><th>Año</th><th>Precio</th><th>Estado</th>
+        				<th>ID</th><th>Año</th><th>Precio</th><th>Estado</th><th>Operaciones</th>
         			</tr>
         			<?php foreach($ejemplares as $ejemplar){?>
         				<tr>
@@ -102,9 +116,16 @@
         					<td><?=$ejemplar->anyo?></td>
         					<td><?=$ejemplar->precio?></td>
         					<td><?=$ejemplar->estado?></td>
+        					
+        					<td class="centered">
+        					<?php if(!$ejemplar->hasAny('Prestamo')) { ?>
+        						<a onclick="confirmar(<?= $ejemplar->id ?>)">Borrar</a>
+        					<?php }  ?>
+        					</td>
         				</tr>
         			<?php } //mm ?>
         		</table>
+        		<?php }  ?>
 			</section>
 			
 			<div clas="centrado my2">
