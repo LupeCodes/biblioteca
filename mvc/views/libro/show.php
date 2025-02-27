@@ -53,6 +53,23 @@
 				<p><?=$libro->sinopsis ? paragraph($libro->sinopsis) : 'SIN DETALLES'?></p>
 			</section>
 			
+			<section>
+				<h3>Ejemplares del libro <b><?=$libro->titulo?></b></h3>
+				<table class="table w100 centered-block">
+        			<tr>
+        				<th>ID</th><th>Año</th><th>Precio</th><th>Estado</th>
+        			</tr>
+        			<?php foreach($ejemplares as $ejemplar){?>
+        				<tr>
+        					<td><?=$ejemplar->id?></td>
+        					<td><?=$ejemplar->anyo?></td>
+        					<td><?=$ejemplar->precio?></td>
+        					<td><?=$ejemplar->estado?></td>
+        				</tr>
+        			<?php } //mm ?>
+        		</table>
+			</section>
+			
 			<div clas="centrado">
 				<a class="button" onclick="history.back()">Atrás</a>
 				<a class="button" href="/libro/list">Lista de libros</a>

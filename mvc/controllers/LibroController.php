@@ -29,11 +29,12 @@ class LibroController extends Controller{
         
         //lo buscamos con findOrFail porque nos ahorra hacer más comprobaciones
         $libro = Libro::findOrFail($id);    //busca el libro con ese ID
-        
+        $ejemplares = $libro->hasMany('Ejemplar');
         
         //carga la vista y le pasa el libro recuperado
         return view('libro/show',[
-            'libro' => $libro
+            'libro' => $libro,
+            'ejemplares' => $ejemplares
         ]);
     }
     
@@ -107,10 +108,12 @@ class LibroController extends Controller{
         
         //busca el libro con ese ID
         $libro = Libro::findOrFail($id, "No se encontró el libro");
+        $ejemplares = $libro->hasMany('Ejemplar');
         
         //retornamos una ViewResponse con la vista con el formulario de edicion
         return view('libro/edit', [
-            'libro' => $libro
+            'libro' => $libro,
+            'ejemplares' => $ejemplares
         ]);
     }
     

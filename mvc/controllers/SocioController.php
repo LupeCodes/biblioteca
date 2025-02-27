@@ -161,4 +161,56 @@ class SocioController extends Controller{
     
     
     
+    
+    //METODO DELETE--------------------------------------------
+    public function delete(int $id = 0){
+        
+        $socio = Socio::findOrFail($id, "No existe el socio");
+        
+        return view('socio/delete', [
+            'socio' => $socio
+        ]);
+    }
+    
+    
+    //METODO DESTROY----------------------------------------------------------
+    public function destroy(){
+        
+        //comprueba que llega el formulario de confirmación
+        if(!request()->has('borrar'))
+            throw new FormException('No se recibió la confirmación');
+            
+            //recupera el identificador (id)
+            $id     = intval(request()->post('id'));
+            //con el id, recuperamos el socio
+            $socio  = Socio::findOrFail($id);
+            
+            //si el libro tiene ejemplares, no permitiremos su borrados
+            //más adelante, ocultaremos el botón borrar en estos casos
+            //para que el usuario no llegue al formulario de confirmación
+            if($socio->hasAny('Prestamo'))
+                throw new Exception("No se puede borrar el socio mientras tenga prestamos");
+                
+                //intentamos borrar el libro
+                try{
+                    $socio->deleteObject();
+                    Session::success("Se ha borrado el socio $socio->nombre $socio->apellidos. Estarás contento");
+                    return redirect("/Socio/list");
+                    
+                    //si se produce unerror en la operacion con la BDD salta el catch
+                }catch(SQLException $e){
+                    
+                    Session::error("No se pudo borrar el socio $socio->nombre $socio->apellidos");
+                    
+                    if(DEBUG)
+                        throw new SQLException($e->getMessage());
+                        
+                        return redirect("/Socio/delete/$id");
+                }
+    }
+    
+    
+    
+    
+    
 }//FIN DE LA CLASE
