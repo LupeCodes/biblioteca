@@ -57,7 +57,7 @@
 				<h3>Ejemplares del libro <b><?=$libro->titulo?></b></h3>
 				<table class="table w100 centered-block">
         			<tr>
-        				<th>ID</th><th>Año</th><th>Precio</th><th>Estado</th>
+        				<th>ID</th><th>Año</th><th>Precio</th><th>Estado</th><th>Operaciones</th>
         			</tr>
         			<?php foreach($ejemplares as $ejemplar){?>
         				<tr>
@@ -65,6 +65,7 @@
         					<td><?=$ejemplar->anyo?></td>
         					<td><?=$ejemplar->precio?></td>
         					<td><?=$ejemplar->estado?></td>
+        					<td><a href='/Ejemplar/edit/<?=$ejemplar->id?>'>Editar</a></td>
         				</tr>
         			<?php } //mm ?>
         		</table>

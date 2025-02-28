@@ -46,6 +46,61 @@ class EjemplarController extends Controller{
     
     
     
+    //EDIT------------------------------------------------------------
+    public function edit(int $id = 0){
+        
+        //busca el libro con ese ID
+        $ejemplar = Ejemplar::findOrFail($id, "No se encontró el ejemplar");
+        
+        //retornamos una ViewResponse con la vista con el formulario de edicion
+        return view('ejemplar/edit', [
+            'ejemplar' => $ejemplar
+        ]);
+    }
+    
+    
+    //METODO UPDATE-----------------------------------------------------
+    public function update(){
+        
+        //si no llega el formulario...
+        if(!request()->has('actualizar'))
+            //lanza la excepcion
+            throw new FormException('No se recibieron datos');
+            
+            $id = intval(request()->post('id'));    //recuperar el id vía POST
+            
+            $ejemplar = Ejemplar::findOrFail($id, "No se ha encontrado el ejemplar.");
+            
+            $libro = $ejemplar->belongsTo('Libro');
+            
+            //recuperar el resto de campos
+            $ejemplar->anyo       = intval(request()->post('anyo'));
+            $ejemplar->precio     = floatval(request()->post('precio'));
+            $ejemplar->estado     = request()->post('estado');
+           
+            $idlibro = $libro->id;
+            //intentamos actualizar el libro
+            try{
+                $ejemplar->update();
+                Session::success("Actualización del ejemplar correcta.");
+                return redirect("/Libro/edit/$idlibro"); 
+                
+                
+                //si se produce un error al guardar el libro
+            }catch(SQLException $e){
+                
+                Session::error("Hubo errores en la actualización del ejemplar");
+                
+                if(DEBUG)
+                    throw new SQLException($e->getMessage());
+                    
+                    return redirect("/Libro/edit/$idlibro");
+            }
+            
+    }//FIN DE UPDATE
+    
+    
+    
     //DESTROY--------------------------------------------------------------------
     public function destroy(int $id = 0){
         

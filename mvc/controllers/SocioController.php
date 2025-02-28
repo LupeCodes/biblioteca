@@ -22,16 +22,19 @@ class SocioController extends Controller{
     
     
     
-    //DETALLES DEL LIBRO---------------------------------------
+    //DETALLES DEL SOCIO---------------------------------------
     public function show(int $id = 0){
         
         //lo buscamos con findOrFail porque nos ahorra hacer más comprobaciones
         $socio = Socio::findOrFail($id);    //busca el socio con ese ID
         
+        $vprestamos = $socio->hasMany('V_prestamo');
         
+        //dd($vprestamos);
         //carga la vista y le pasa el socio recuperado
         return view('socio/show',[
-            'socio' => $socio
+            'socio' => $socio,
+            'vprestamos' => $vprestamos
         ]);
     }
     

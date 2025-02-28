@@ -23,7 +23,7 @@
 		<?= $template->menu() ?>
 		<?= $template->breadCrumbs([
 		    'Socios' => '/Socio/list',
-		    $socio->nombre.$socio->apellidos => null
+		    $socio->nombre.' '.$socio->apellidos => null
 		    //'Detalles del libro' => 'Libro/show'
 		]) ?>
 		<?= $template->messages() ?>
@@ -47,6 +47,22 @@
         		
 			</section>
 			
+			<section>
+				<h3>Prestamos del socio <b><?=$socio->nombre?> <?=$socio->apellidos?></b></h3>
+        		<table class="table w100">
+        			<tr>
+        				<th>Titulo</th><th>Fecha</th><th>Devolución</th><th>ID Ejemplar</th>
+        			</tr>
+        			<?php foreach($vprestamos as $vprestamo){?>
+        				<tr>
+        					<td><?=$vprestamo->titulo?></td>
+        					<td><?=$vprestamo->prestamo?></td>
+        					<td><?=$vprestamo->devolucion?></td>
+        					<td><?=$vprestamo->idejemplar?></td>
+        				</tr>
+        			<?php } ?>
+        		</table>
+			</section>
 			
 			<div clas="centrado">
 				<a class="button" onclick="history.back()">Atrás</a>

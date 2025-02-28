@@ -49,6 +49,13 @@
     					<li><a href='/Tema/create'>Nuevo Tema</a></li>
 					</ul>
 				</section>
+				<section>
+					<h2>Operaciones con prestamos</h2>
+					<ul>
+    					<li><a href='/Prestamo'>Lista de Prestamos</a></li>
+    					<li><a href='/Prestamo/create'>Nuevo Prestamo</a></li>
+					</ul>
+				</section>
 			</div>
         	
         	<div class="centered">
