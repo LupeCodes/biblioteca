@@ -7,4 +7,10 @@ class PanelController extends Controller{
         return view('panel/bibliotecario');
     }
     
+    
+    //metodo por defecto
+    public function bibliotecario(){
+        return view('panel/bibliotecario');
+    }
+    
 }//FIN DE LA CLASE

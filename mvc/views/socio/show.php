@@ -51,14 +51,24 @@
 				<h3>Prestamos del socio <b><?=$socio->nombre?> <?=$socio->apellidos?></b></h3>
         		<table class="table w100">
         			<tr>
-        				<th>Titulo</th><th>Fecha</th><th>Devolución</th><th>ID Ejemplar</th>
+        				<th>Titulo</th><th>Fecha</th><th>Límite</th><th>Devolución</th>
+        				<th>ID Ejemplar</th><th>Operaciones</th>
         			</tr>
         			<?php foreach($vprestamos as $vprestamo){?>
         				<tr>
         					<td><?=$vprestamo->titulo?></td>
         					<td><?=$vprestamo->prestamo?></td>
+        					<td><?=$vprestamo->limite?></td>
         					<td><?=$vprestamo->devolucion?></td>
         					<td><?=$vprestamo->idejemplar?></td>
+        					<td>
+        					<?php 
+        					if(!$vprestamo->devolucion){
+        					?>
+        					<a href='/Prestamo/devolucion/<?=$vprestamo->id?>'>Devolución</a>
+        					<a href='/Prestamo/ampliar/<?=$vprestamo->id?>'>Ampliar</a>
+        					<?php } ?>
+        						</td>
         				</tr>
         			<?php } ?>
         		</table>

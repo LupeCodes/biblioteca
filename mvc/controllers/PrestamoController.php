@@ -77,4 +77,100 @@ class PrestamoController extends Controller{
             }
     }//FIN DE FUNCION STORE
     
+    
+    //METODO DEVOLUCIÓN-------------------------------------------------------------------
+    public function devolucion(int $id = 0){
+        
+        $prestamo = Prestamo::findOrFail($id, 'No se encontró el préstamo');
+        
+        $prestamo->devolucion = date('Y-m-d');
+        
+        
+        //esto nos da la página actual, xq podemos llegar aquí desde dos sitios distintos
+        //la vista de lista de prestamos, o la lista de los prestamos de un socio en la 
+        //vista socio detalles
+        $url = $_SERVER['HTTP_REFERER']; 
+        
+        try{
+            $prestamo->update();
+            
+            Session::success("Se ha actualizado la devolución");
+            
+            return redirect("$url");
+            //return redirect("/Prestamo/list");
+            
+        }catch(SQLException $e){
+            
+            Session::error("Hubo errores en la actualización de la devolución");
+            
+            if(DEBUG)
+                throw new SQLException($e->getMessage());
+                
+                return redirect("$url");
+                //return redirect("/Prestamo/list");
+        }
+        
+        
+    }//FIN DE METODO DEVOLUCION
+    
+    
+    
+    //METODO AMPLIAR-------------------------------------------------------------------
+    public function ampliar(int $id = 0){
+        
+        //busca el prestamo con ese ID
+        $prestamo = Prestamo::findOrFail($id, "No se encontró el prestamo");
+        $vprestamo = V_prestamo::findOrFail($id, "No se encontró el prestamo");
+        
+        return view('Prestamo/ampliar',[
+            'prestamo' => $prestamo ,
+            'vprestamo'=> $vprestamo
+        ]);
+        
+        
+    }//FIN DE METODO AMPLIAR
+    
+    
+    //METODO UPDATE
+    public function update(){
+        
+        //si no llega el formulario...
+        if(!request()->has('actualizar'))
+            //lanza la excepcion
+            throw new FormException('No se recibieron datos');
+            
+        $id = intval(request()->post('id'));    //recuperar el id vía POST
+        //dd($id);
+        
+        
+        $prestamo = Prestamo::findOrFail($id, "No se ha encontrado el ejemplar.");
+            
+         //dd($prestamo);
+         
+         
+        //recuperar el resto de campos
+        $prestamo->limite       = request()->post('limite');
+        $prestamo->incidencia   = request()->post('incidencia');
+            
+        //intentamos actualizar el prestamo
+        try{
+            $prestamo->update();
+            Session::success("Actualización del prestamo correcta");
+            return redirect("/Socio/show/$prestamo->idsocio");
+                
+                
+            //si se produce un error al guarda la actualizacion del prestamo
+        }catch(SQLException $e){
+                
+            Session::error("Hubo errores en la actualización del prestamo");
+                
+            if(DEBUG)
+                throw new SQLException($e->getMessage());
+                    
+                return redirect("/Socio/show/$idsocio");
+            }
+            
+    }//FIN DE UPDATE
+    
+    
 }//FIN DE LA CLASE

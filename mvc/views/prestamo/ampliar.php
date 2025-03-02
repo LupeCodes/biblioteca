@@ -2,11 +2,11 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8">
-		<title>Nuevo prestamo</title>
+		<title>Ampliar prestamo</title>
 		
 		<!-- META -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="Nuevo prestamo <?= APP_NAME ?>">
+		<meta name="description" content="Ampliar prestamo <?= APP_NAME ?>">
 		<meta name="author" content="Lupe Jiménez">
 		
 		<!-- FAVICON -->
@@ -19,43 +19,44 @@
 	</head>
 	<body>
 		<?= $template->login() ?>
-		<?= $template->header('Nuevo prestamo') ?>
+		<?= $template->header('Ampliar prestamo') ?>
 		<?= $template->menu() ?>
 		<?= $template->breadCrumbs([
-		    'Panel de bibliotecario' => 'panel/bibliotecario',
-		    'Nuevo Prestamo' => null
+		    'Panel de bibliotecario' => 'panel/bibliotecario', //para que funcione haz un panel controler con un metodo bibliotecario que te cargue esa vista
+		    'Ampliar prestamo' => null
 		]) ?>
 		<?= $template->messages() ?>
 		
 		<main>
 			<h1><?= APP_NAME ?></h1>
-			<h2>Nuevo prestamo</h2>
+			<h2>Ampliar prestamo</h2>
 			
-			<form method="POST" enctype="multipart/form-data" action="/Prestamo/store">
-				<input type="hidden"  name="idprestamo" value="<?= $prestamo->id ?>">
+			<h3>Socio: <?= $vprestamo->idsocio ?>, <?= $vprestamo->nombre ?> <?= $vprestamo->apellidos ?></h3>
+			<h3>Título: <?= $vprestamo->titulo ?></h3>
+			
+			<form method="POST" action="/Prestamo/update">
+				<input type="hidden"  name="id" value="<?= $prestamo->id ?>">
+				<input type="hidden"  name="idsocio" value="<?= $prestamo->idsocio ?>">
+				
 				<div class="flex2">
-        			<label>Socio</label>
-        			<input type="number" name="idsocio" value="<?= old('socio') ?>">
-        			<br>
-        			<label>Ejemplar</label>
-        			<input type="number" name="idejemplar" value="<?= old('ejemplar') ?>">
-        			<br>
+        			
         			
         			<?php //creamos una variable para ponerle luego value al limite
 		                  //provemos
-		                  $tressemanas = time()+(21*24*60*60);
-		                  $limi = date('Y-m-d', $tressemanas);
+		                  $unasemana = time()+(7*24*60*60);
+		                  $limi = date('Y-m-d', $unasemana);
 		                  
         			//dd($limi);
+        			//la fecha llega bien en el dd, pero no se muestra en el value del input, no se xq
         			?>
         			
-        			<label>Límite</label>
+        			<label>Nuevo límite:</label>
         			<input type="date" name="limite" value="<?= $limi ?>">
         			<br>
         			
         			
         			<div class="centered mt2">
-        				<input type="submit" class="button" name="guardar" value="Guardar">
+        				<input type="submit" class="button" name="actualizar" value="Actualizar">
         				<input type="reset" class="button"  value="Reset">
         			</div>
     			</div>			

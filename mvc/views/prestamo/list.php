@@ -34,7 +34,8 @@
 			<?php if ($prestamos){ ?>
         		<table class="table w100">
         			<tr>
-        				<th>ID Ejemplar:</th><th>Título</th><th>Nombre</th><th>Teléfono</th><th>Prestamo</th><th>Devolución</th>
+        				<th>ID Ejemplar:</th><th>Título</th><th>Nombre</th><th>Teléfono</th>
+        					<th>Prestamo</th><th>Devolución</th><th>Operaciones</th>
         			</tr>
         			<?php foreach($prestamos as $prestamo){?>
         				<tr>
@@ -44,6 +45,16 @@
         					<td><?=$prestamo->telefono?></td>
         					<td><?=$prestamo->prestamo?></td>
         					<td><?=$prestamo->devolucion?></td>
+        					<td>
+        					<?php 
+        					if(!$prestamo->devolucion){
+        					?>
+        					<a href='/Prestamo/devolucion/<?=$prestamo->id?>'>Devolución</a>
+        					<a href='/Prestamo/ampliar/<?=$prestamo->id?>'>Ampliar</a>
+        					<?php 
+        					}
+        					?>
+        					</td>
         				</tr>
         			<?php } ?>
         		</table>
