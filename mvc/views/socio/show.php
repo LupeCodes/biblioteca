@@ -52,7 +52,7 @@
         		<table class="table w100">
         			<tr>
         				<th>Titulo</th><th>Fecha</th><th>Límite</th><th>Devolución</th>
-        				<th>ID Ejemplar</th><th>Operaciones</th>
+        				<th>ID Ejemplar</th><th>Incidencia</th><th>Operaciones</th>
         			</tr>
         			<?php foreach($vprestamos as $vprestamo){?>
         				<tr>
@@ -61,6 +61,7 @@
         					<td><?=$vprestamo->limite?></td>
         					<td><?=$vprestamo->devolucion?></td>
         					<td><?=$vprestamo->idejemplar?></td>
+        					<td><?=$vprestamo->incidencia?></td>
         					<td>
         					<?php 
         					if(!$vprestamo->devolucion){
@@ -68,6 +69,7 @@
         					<a href='/Prestamo/devolucion/<?=$vprestamo->id?>'>Devolución</a>
         					<a href='/Prestamo/ampliar/<?=$vprestamo->id?>'>Ampliar</a>
         					<?php } ?>
+        					<a href='/Prestamo/incidencia/<?=$vprestamo->id?>'>Incidencia</a>
         						</td>
         				</tr>
         			<?php } ?>

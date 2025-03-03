@@ -40,18 +40,8 @@
 				
 				<div class="flex2">
         			
-        			
-        			<?php //creamos una variable para ponerle luego value al limite
-		                  //provemos
-		                  $unasemana = time()+(7*24*60*60);
-		                  $limi = date('Y-m-d', $unasemana);
-		                  
-        			//dd($limi);
-        			//la fecha llega bien en el dd, pero no se muestra en el value del input, no se xq
-        			?>
-        			
-        			<label>Nuevo límite:</label>
-        			<input type="date" name="limite" value="<?= $limi ?>">
+        			<label>Incidencia:</label>
+        			<input type="text" name="incidencia" value="<?= old('incidencia') ?>">
         			<br>
         			
         			

@@ -51,9 +51,11 @@
         					?>
         					<a href='/Prestamo/devolucion/<?=$prestamo->id?>'>Devolución</a>
         					<a href='/Prestamo/ampliar/<?=$prestamo->id?>'>Ampliar</a>
+        					
         					<?php 
         					}
         					?>
+        					<a href='/Prestamo/incidencia/<?=$prestamo->id?>'>Incidencia</a>
         					</td>
         				</tr>
         			<?php } ?>

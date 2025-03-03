@@ -131,6 +131,22 @@ class PrestamoController extends Controller{
     }//FIN DE METODO AMPLIAR
     
     
+    //METODO INCIDENCIA-------------------------------------------------------------------
+    public function incidencia(int $id = 0){
+        
+        //busca el prestamo con ese ID
+        $prestamo = Prestamo::findOrFail($id, "No se encontró el prestamo");
+        $vprestamo = V_prestamo::findOrFail($id, "No se encontró el prestamo");
+        
+        return view('Prestamo/incidencia',[
+            'prestamo' => $prestamo ,
+            'vprestamo'=> $vprestamo
+        ]);
+        
+        
+    }//FIN DE METODO INCIDENCIA
+    
+    
     //METODO UPDATE
     public function update(){
         

@@ -30,10 +30,13 @@ class TemaController extends Controller{
         //lo buscamos con findOrFail porque nos ahorra hacer más comprobaciones
         $tema = Tema::findOrFail($id);    //busca el tema con ese ID
         
+        $libros = $tema->belongsToMany('Libro', 'temas_libros');
+        
         
         //carga la vista y le pasa el tema recuperado
         return view('tema/show',[
-            'tema' => $tema
+            'tema' => $tema,
+            'libros' => $libros
         ]);
     }
     

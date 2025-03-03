@@ -30,11 +30,13 @@ class LibroController extends Controller{
         //lo buscamos con findOrFail porque nos ahorra hacer más comprobaciones
         $libro = Libro::findOrFail($id);    //busca el libro con ese ID
         $ejemplares = $libro->hasMany('Ejemplar');
+        $temas = $libro->belongsToMany('Tema', 'temas_libros');
         
         //carga la vista y le pasa el libro recuperado
         return view('libro/show',[
             'libro' => $libro,
-            'ejemplares' => $ejemplares
+            'ejemplares' => $ejemplares,
+            'temas' => $temas
         ]);
     }
     
@@ -109,11 +111,18 @@ class LibroController extends Controller{
         //busca el libro con ese ID
         $libro = Libro::findOrFail($id, "No se encontró el libro");
         $ejemplares = $libro->hasMany('Ejemplar');
+        //recuperamos los temas del libro
+        $temas = $libro->belongsToMany('Tema', 'temas_libros');
+        
+        //recuperamos la lista completa de temas
+        $listaTemas = Tema::orderBy('tema');
         
         //retornamos una ViewResponse con la vista con el formulario de edicion
         return view('libro/edit', [
-            'libro' => $libro,
-            'ejemplares' => $ejemplares
+            'libro'      => $libro,
+            'ejemplares' => $ejemplares,
+            'temas'      => $temas,
+            'listaTemas' => $listaTemas
         ]);
     }
     
@@ -213,5 +222,40 @@ class LibroController extends Controller{
                 return redirect("/Libro/delete/$id");    
             }
     }
+    
+    
+    //METODO ADDTEMA--------------------------------------------------
+    public function addTema(){
+        
+        if (empty(request()->post('add')))
+            throw new FormException("No se recibió el formulario.");
+        
+        //recupera los identificadores necesarios (idlibro e idtema)
+        $idlibro = intval(request()->post('idlibro'));
+        $idtema  = intval(request()->post('idtema'));
+        
+        //recupera las entidades libro y tema
+        $libro  = Libro::findOrFail($idlibro, "No se encontró el libro");
+        $tema   = Tema::findOrFail($idtema, "No se encontró el tema");
+        
+        //intentamos vincular el tema al libro
+        try{
+            $libro->addTema($idtema);
+            Session::success("Se ha añadido $tema->tema a $libro->titulo");
+            return redirect("/Libro/edit/$idlibro");
+        //y si no lo consigue...
+        }catch(SQLException $e){
+            
+            Session::error("No se pudo añadir $tema->tema a $libro->titulo");
+            
+            if(DEBUG)
+                throw new Exception($e->getMessage());
+            
+            return redirect("/Libro/edit/$idlibro");
+        }
+    }
+    
+    
+    
     
 }//FIN DE LA CLASE

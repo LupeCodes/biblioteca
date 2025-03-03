@@ -36,6 +36,29 @@
         		<p><b>Tema:</b>			<?=$tema->tema?></p>
         		<p><b>Descripción:</b>	<?=$tema->descripcion?></p>
         		
+			<?php 
+				if(!$libros){
+				    echo "<div class='warning p2'><p>No hay libros que traten de este tema</p></div>";
+				}else{?>
+				<h2>Libros que tratan sobre <?= $tema->tema ?></h2>
+				<table class="table w100">
+        			<tr>
+        				<th>ISBN</th><th>Título</th><th>Autor</th><th>Editorial</th><th>Operaciones</th>
+        			</tr>
+        			<?php foreach($libros as $libro){?>
+        				<tr>
+        					<td><?=$libro->isbn?></td>
+        					<td><a href='/Libro/show/<?=$libro->id?>'><?=$libro->titulo?></a></td>
+        					<td><?=$libro->autor?></td>
+        					<td><?=$libro->editorial?></td>
+        					<td><a href='/Libro/show/<?=$libro->id?>'>Ver</a>
+        					    <a href='/Libro/edit/<?=$libro->id?>'>Editar</a>
+        					    <a href='/Libro/delete/<?=$libro->id?>'>Borrar</a>
+        					</td>
+        				</tr>
+        			<?php } ?>
+        		</table>
+        		<?php } ?>
 			
 			<div clas="centrado">
 				<a class="button" onclick="history.back()">Atrás</a>

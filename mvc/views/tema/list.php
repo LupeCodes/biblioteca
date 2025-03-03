@@ -38,7 +38,7 @@
         			<?php foreach($temas as $tema){?>
         				<tr>
         					<td><?=$tema->id?></td>
-        					<td><?=$tema->tema?></td>
+        					<td><a href='/Tema/show/<?=$tema->id?>'><?=$tema->tema?></a></td>
         					<td><?=$tema->descripcion?></td>
         					<td><a href='/Tema/show/<?=$tema->id?>'>Ver</a>
         					    <a href='/Tema/edit/<?=$tema->id?>'>Editar</a>

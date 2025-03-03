@@ -22,7 +22,7 @@
 		<?= $template->header('Nuevo prestamo') ?>
 		<?= $template->menu() ?>
 		<?= $template->breadCrumbs([
-		    'Panel de bibliotecario' => 'panel/bibliotecario',
+		    'Panel de bibliotecario' => '/panel/bibliotecario',
 		    'Nuevo Prestamo' => null
 		]) ?>
 		<?= $template->messages() ?>
