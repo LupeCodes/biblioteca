@@ -43,7 +43,9 @@ class LibroController extends Controller{
     
     //METODO CREATE-------------------------------------------
     public function create(){
-        return view('libro/create');
+        return view('libro/create',[
+            'listaTemas' => Tema::orderby('tema')
+        ]);
     }
     
     
@@ -74,12 +76,16 @@ class LibroController extends Controller{
         $libro->caracteristicas     =request()->post('caracteristicas');
         $libro->sinopsis            =request()->post('sinopsis');
         
+        //recupera el idtema del desplegable
+        $idtema = intval(request()->post('idtema'));
+        
         //intenta guardar el libro. En caso de que la insercion falle
         //vamos a evitar ir a la página de error y volveremos
         //al formulario "nuevo libro"
         try{
             //guarda el libro en la base de datos
             $libro->save();
+            $libro->addTema($idtema);
             
             //flashea un mensaje de éxito en la sesión
             Session::success("Guardado del libro $libro->titulo correcto");
@@ -115,7 +121,7 @@ class LibroController extends Controller{
         $temas = $libro->belongsToMany('Tema', 'temas_libros');
         
         //recuperamos la lista completa de temas
-        $listaTemas = Tema::orderBy('tema');
+        $listaTemas = array_diff(Tema::orderBy('tema'), $temas);
         
         //retornamos una ViewResponse con la vista con el formulario de edicion
         return view('libro/edit', [
@@ -238,6 +244,7 @@ class LibroController extends Controller{
         $libro  = Libro::findOrFail($idlibro, "No se encontró el libro");
         $tema   = Tema::findOrFail($idtema, "No se encontró el tema");
         
+        //dd($tema);
         //intentamos vincular el tema al libro
         try{
             $libro->addTema($idtema);
@@ -253,7 +260,40 @@ class LibroController extends Controller{
             
             return redirect("/Libro/edit/$idlibro");
         }
-    }
+    }//FIN ADDTEMA
+    
+    
+    
+    //METODO REMOVETEMA----------------------------------------------------------
+    public function removetema(){
+        //comprueba que llega el formulario
+        if(empty(request()->post('idlibro')))
+            throw new FormException("No se recibió el formulario");
+        
+        //recupera los identificadores necesarios (idlibro e idtema)
+        $idlibro = intval(request()->post('idlibro'));
+        $idtema  = intval(request()->post('idtema'));
+            
+        //recupera las entidades libro y tema
+        $libro  = Libro::findOrFail($idlibro, "No se encontró el libro");
+        $tema   = Tema::findOrFail($idtema, "No se encontró el tema");
+        
+        //intenta quitar el tema al libro
+        try{
+            $libro->removeTema($idtema);
+            Session::success("Se ha eliminado $tema->tema de $libro->titulo");
+            return redirect("/Libro/edit/$idlibro");
+        //y si se produce un error...    
+        }catch(SQLException $e){
+            Session::error("No se pudo eliminar $tema->tema de $libro->titulo");
+            
+            if(DEBUG)
+                throw new SQLException($e->getMessage());
+            return redirect("/Libro/edit/$idlibro");
+        }
+        
+        
+    }//FIN DE REMOVETEMA
     
     
     

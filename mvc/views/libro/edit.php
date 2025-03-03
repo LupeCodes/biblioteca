@@ -76,13 +76,6 @@
         			<label>Características</label>
         			<input type="text" name="caracteristicas" value="<?= old('caracteristicas', $libro->caracteristicas) ?>">
         			<br>
-        			<select name="idtema">
-        			<?php 
-        			 foreach($listaTemas as $nuevoTema)
-        			     echo "<option value='$nuevoTema->id'>$nuevoTema->tema</option>\n";
-        			?>
-        			</select>
-        			<input class="button-success" type="submit" name="add" value="Añadir tema">
         			<label>Sinopsis</label>
         			<textarea name="sinopsis"><?= old('sinopsis'), $libro->sinopsis ?></textarea>
         			<br>
@@ -91,8 +84,50 @@
         				<input type="submit" class="button" name="actualizar" value="Actualizar">
         				<input type="reset" class="button"  value="Reset">
         			</div>
-    			</div>			
+        		</div>
 			</form>
+			
+			<section>	
+        		<form class="w50 m0 no-border" method="POST" action="/Libro/addtema">
+        			<input type="hidden" name="idlibro" value="<?= $libro->id ?>">
+            		<select name="idtema">
+            		<?php 
+            		 foreach($listaTemas as $nuevoTema)
+            		     echo "<option value='$nuevoTema->id'>$nuevoTema->tema</option>\n";
+            		?>
+            		</select>
+            		<input class="button-success" type="submit" name="add" value="Añadir tema">
+            		<br>
+        		</form>
+    		</section>				
+			<section>
+				<h2>Temas tratados en <?=$libro->titulo?></h2>
+				<?php 
+				if(!$temas){
+				    echo "<div class='warning p2'><p>No se han indicado temas</p></div>";
+				}else{?>
+				
+				<table class="table w100">
+					<tr>
+						<th>ID</th><th>Tema</th><th>Operaciones</th>
+					</tr>
+				<?php foreach($temas as $tema){?>
+					<tr>
+						<td><?=$tema->id?></td>
+						<td><a href='/Tema/show/<?=$tema->id?>'><?=$tema->tema?>
+							</a></td>
+						<td class="centrado">
+							<form method="POST" class="no-border" action="/Libro/removetema">
+								<input type="hidden" name="idlibro" value="<?= $libro->id ?>">
+								<input type="hidden" name="idtema" value="<?= $tema->id ?>">
+								<input type="submit" class="button-danger" name="remove" value="Borrar">
+							</form>
+						</td>
+					</tr>
+				<?php } ?>		
+				</table>
+			<?php } ?>	
+			</section>
 			
 			<section>
 				<script>
