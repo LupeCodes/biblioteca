@@ -68,7 +68,7 @@ define('DEFAULT_CONTROLLER', 'WelcomeController');
 define('DEFAULT_METHOD', 'index');
    
 // Email del administrador, para la operación de "contacto"
-define('ADMIN_EMAIL', 'lwzgrdkvkhlspslvug@ytnhy.com');
+define('ADMIN_EMAIL', 'fcuzsahrczspmyttou@poplk.com');
 
 // ¿Deben las cadenas vacías ser convertidas a NULL? 
 // se aplica al recuperar los datos de la petición mediante el objeto Request,
@@ -195,6 +195,11 @@ define('RESULTS_PER_PAGE', 10);  // Número de resultados por página
 define('UPLOAD_FOLDER', '../storage'); // carpeta por defecto para las subidas de ficheros
 define('UPLOAD_MAX_SIZE', 0);          // tamaño máximo para las subidas, en bytes (0 sin límite)
 
+//carpeta para las imagenes de las portadas de la biblioteca
+define('BOOK_IMAGE_FOLDER', '/images/books');
+
+//imagen por defecto para los libros que no tengan portadas
+define('DEFAULT_BOOK_IMAGE','cover.jpg');
 
 
 /* -------------------------------------------------------------

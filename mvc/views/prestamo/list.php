@@ -32,6 +32,46 @@
 			<h2>Lista completa de prestamos</h2>
 			
 			<?php if ($prestamos){ ?>
+			<!-- FILTRO DE BUSQUEDA -->
+				<?php 
+				//si hay filtro guardado en sesion...
+				if($filtro){
+				    //pone el formulario de "quitar filtro"
+				    //el metodo removeFilterForm necesita conocer el filtro
+				    //y la ruta a la q se envia el formulario
+				    echo $template->removeFilterForm($filtro, '/Libro/list');
+				//y si no hay filtro guardado en sesion...    
+				}else{
+				    //pone el formulario de nuevo filtro
+				    echo $template->filterForm(
+				    
+				        //lista de campos para el desplegable buscar en
+				         [
+				            'Titulo' => 'titulo',
+				            'Nombre' => 'nombre',
+				            'Devolucion' => 'devolucion',
+				            'Prestamo' => 'prestamo'
+				        ],
+				        //lista de campos para el plesplegable ordenado por 
+    				    [
+        				    'Titulo' => 'titulo',
+        				    'Nombre' => 'nombre',
+        				    'Devolucion' => 'devolucion',
+        				    'Prestamo' => 'prestamo'
+    				    ],
+    				    //valor por defecto para buscar en
+    				    'Título',
+    				    //valor por defecto para ordenado por
+    				    'Título'
+				    );
+				}
+				?>
+			
+				<!-- Enlaces creados por el paginator -->
+				<div class="right">
+					<?= $paginator->stats() ?>
+				</div>
+				
         		<table class="table w100">
         			<tr>
         				<th>ID Ejemplar:</th><th>Título</th><th>Nombre</th><th>Teléfono</th>
@@ -60,6 +100,8 @@
         				</tr>
         			<?php } ?>
         		</table>
+        		<?= $paginator->ellipsisLinks() ?>
+        		
         	<?php }else{ ?>
         		<div class="danger p2">
         			<p>No hay prestamos que mostrar</p>

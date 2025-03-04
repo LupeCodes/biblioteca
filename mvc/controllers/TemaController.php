@@ -8,18 +8,39 @@ class TemaController extends Controller{
     
     
     //LISTADO DE TEMAS-----------------------------------
-    public function list(){
+    public function list(int $page = 1){
         
-        //recupera todos los temas y los ordena por id
-        //$temas = Tema::all();
+        $filtro = Filter::apply('temas');
+        $limit = RESULTS_PER_PAGE;  //numero de resultados x pagina, en el config
         
-        //para ordenarlos por titulo, por ejemplo, sería así:
-        $temas = Tema::orderBy('tema','ASC');
-        
+        //si hay filtro
+        if($filtro){
+            //recuperamos el total de temas q cumplen el filtro
+            $total = Tema::filteredResults($filtro);
+            //el objeto paginador
+            $paginator = new Paginator('/Tema/list', $page, $limit, $total);
+            
+            //recupera los temas que cumplen los criterios de filtro
+            $temas = Tema::filter($filtro, $limit, $paginator->getOffset());
+          
+        }else{
+            $total = Tema::total();    //el total de libros q hay
+            
+            //el objeto paginador
+            $paginator = new Paginator('/Tema/list', $page, $limit, $total);
+            
+            //recupera todos los temas y los ordena por id
+            //$temas = Tema::all();
+            
+            //para ordenarlos por titulo, por ejemplo, sería así:
+            $temas = Tema::orderBy('tema','ASC', $limit, $paginator->getOffset());
+        }
+            
         //carga la vista que los muestra
         //el view es un helper
         return view('tema/list',[
-            'temas' => $temas
+            'temas'     => $temas,
+            'paginator' => $paginator
         ]);
     }
     

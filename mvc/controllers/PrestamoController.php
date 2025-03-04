@@ -8,15 +8,35 @@ class PrestamoController extends Controller{
     
     
     //LISTADO DE PRESTAMOS-----------------------------------
-    public function list(){
+    public function list(int $page = 1){
+        $filtro = Filter::apply('prestamos');
+        $limit = RESULTS_PER_PAGE;  //numero de resultados x pagina, en el config
         
-        //recupera todos los prestamos y los ordena por fecha de prestamo desc:
-        $prestamos = V_prestamo::orderBy('prestamo','DESC');
+        //si hay filtro
+        if($filtro){
+            //recupera el total de prestamos que cumplen los criterios
+            $total = V_prestamo::filteredResults($filtro);
+            //el objeto paginador
+            $paginator = new Paginator('/Prestamo/list', $page, $limit, $total);
+            
+            //recupera los prestamos que cumplen el filtro
+            $prestamos = V_prestamo::filter($filtro, $limit, $paginator->getOffset());
         
+        }else{
+            $total = Prestamo::total();    //el total de libros q hay
+            
+            //el objeto paginador
+            $paginator = new Paginator('/Libro/list', $page, $limit, $total);
+            
+            //recupera todos los prestamos y los ordena por fecha de prestamo desc:
+            $prestamos = V_prestamo::orderBy('prestamo','DESC',$limit, $paginator->getOffset());
+        }
         //carga la vista que los muestra
         //el view es un helper
         return view('prestamo/list',[
-            'prestamos' => $prestamos
+            'prestamos' => $prestamos,
+            'paginator' => $paginator,
+            'filtro'    => $filtro
         ]);
     }
     

@@ -31,9 +31,48 @@
 			<h2>Lista completa de libros</h2>
 			
 			<?php if ($libros){ ?>
+				<!-- FILTRO DE BUSQUEDA -->
+				<?php 
+				//si hay filtro guardado en sesion...
+				if($filtro){
+				    //pone el formulario de "quitar filtro"
+				    //el metodo removeFilterForm necesita conocer el filtro
+				    //y la ruta a la q se envia el formulario
+				    echo $template->removeFilterForm($filtro, '/Libro/list');
+				//y si no hay filtro guardado en sesion...    
+				}else{
+				    //pone el formulario de nuevo filtro
+				    echo $template->filterForm(
+				    
+				        //lista de campos para el desplegable buscar en
+				         [
+				            'Titulo' => 'titulo',
+				            'Editorial' => 'editorial',
+				            'Autor' => 'autor',
+				            'ISBN' => 'isbn'
+				        ],
+				        //lista de campos para el plesplegable ordenado por 
+    				    [
+        				    'Titulo' => 'titulo',
+        				    'Editorial' => 'editorial',
+        				    'Autor' => 'autor',
+        				    'ISBN' => 'isbn'
+    				    ],
+    				    //valor por defecto para buscar en
+    				    'Título',
+    				    //valor por defecto para ordenado por
+    				    'Título'
+				    );
+				}
+				?>
+			
+				<!-- Enlaces creados por el paginator -->
+				<div class="right">
+					<?= $paginator->stats() ?>
+				</div>
         		<table class="table w100">
         			<tr>
-        				<th>ISBN</th><th>Título</th><th>Autor</th><th>Editorial</th><th>Operaciones</th>
+        				<th>ISBN</th><th>Título</th><th>Autor</th><th>Editorial</th><th>Ejemplares</th><th>Operaciones</th>
         			</tr>
         			<?php foreach($libros as $libro){?>
         				<tr>
@@ -41,13 +80,17 @@
         					<td><a href='/Libro/show/<?=$libro->id?>'><?=$libro->titulo?></a></td>
         					<td><?=$libro->autor?></td>
         					<td><?=$libro->editorial?></td>
+        					<td><?=$libro->ejemplares?></td>
         					<td><a href='/Libro/show/<?=$libro->id?>'>Ver</a>
         					    <a href='/Libro/edit/<?=$libro->id?>'>Editar</a>
+        					    <?php if(!$libro->ejemplares){?>
         					    <a href='/Libro/delete/<?=$libro->id?>'>Borrar</a>
+        					    <?php } ?>
         					</td>
         				</tr>
         			<?php } ?>
         		</table>
+        		<?= $paginator->ellipsisLinks() ?>
         	<?php }else{ ?>
         		<div class="danger p2">
         			<p>No hay libros que mostrar</p>

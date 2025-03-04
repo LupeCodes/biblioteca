@@ -8,20 +8,41 @@ class LibroController extends Controller{
     
     
     //LISTADO DE LIBROS-----------------------------------
-    public function list(){
+    public function list(int $page = 1){
+        //analiza si hay filtros, pone uno nuevo o quita el existente
+        $filtro = Filter::apply('libros');
         
-        //recupera todos los libros y los ordena por id
-        //$libros = Libro::all(); 
+        $limit = RESULTS_PER_PAGE;  //numero de resultados x pagina, en el config
         
-        //para ordenarlos por titulo, por ejemplo, sería así:
-        $libros = Libro::orderBy('titulo','ASC');
+        //si hay filtro
+        if($filtro){
+            $total = V_libro::filteredResults($filtro);    //el total de libros q hay
+            
+            //el objeto paginador
+            $paginator = new Paginator('/Libro/list', $page, $limit, $total);
+            
+            //recupera los libros que cumplen los criterios de busqueda
+            $libros = V_libro::filter($filtro, $limit, $paginator->getOffset());
+        //si no hay filtro...    
+        }else{
+            //recupera el total de libros
+            $total= V_Libro::total();
+            
+            //crea el objeto paginador
+            $paginator = new Paginator('/Libro/list', $page, $limit, $total);
+            
+            //recupera todos los libros
+            $libros = V_libro::orderBy('titulo', 'ASC', $limit, $paginator->getOffset());
+        }
         
         //carga la vista que los muestra
         //el view es un helper
         return view('libro/list',[
-            'libros' => $libros
+            'libros'    => $libros,
+            'paginator' => $paginator,
+            'filtro'    =>  $filtro
         ]);
-    }
+    }//FIN DEL METODO
     
     
     //DETALLES DEL LIBRO---------------------------------------
