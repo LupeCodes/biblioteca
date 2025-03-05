@@ -38,7 +38,7 @@
 				    //pone el formulario de "quitar filtro"
 				    //el metodo removeFilterForm necesita conocer el filtro
 				    //y la ruta a la q se envia el formulario
-				    echo $template->removeFilterForm($filtro, '/Libro/list');
+				    echo $template->removeFilterForm($filtro, '/Socio/list');
 				//y si no hay filtro guardado en sesion...    
 				}else{
 				    //pone el formulario de nuevo filtro
@@ -72,10 +72,17 @@
 				
         		<table class="table w100">
         			<tr>
-        				<th>ID</th><th>Nombre</th><th>Apellidos</th><th>DNI</th><th>eMail</th><th>Teléfono</th><th>Operaciones</th>
+        				<th>Foto</th><th>ID</th><th>Nombre</th><th>Apellidos</th><th>DNI</th><th>eMail</th><th>Teléfono</th><th>Operaciones</th>
         			</tr>
         			<?php foreach($socios as $socio){?>
         				<tr>
+        					<td class="centrado">
+        						<a href='/Socio/show/<?=$socio->id?>'>
+        							<img src="<?=MEMBER_IMAGE_FOLDER.'/'.($socio->foto ?? DEFAULT_MEMBER_IMAGE)?>"
+        								class="table-image" alt="Foto de <?=$socio->nombre?>"
+        								title="Foto de <?=$socio->nombre?>">
+        						</a>
+        					</td>
         					<td><?=$socio->id?></td>
         					<td><a href='/Socio/show/<?=$socio->id?>'><?=$socio->nombre?></a></td>
         					<td><?=$socio->apellidos?></td>
@@ -84,7 +91,9 @@
         					<td><?=$socio->telefono?></td>
         					<td><a href='/Socio/show/<?=$socio->id?>'>Ver</a>
         					    <a href='/Socio/edit/<?=$socio->id?>'>Editar</a>
+        					    <?php if (!$socio->hasAny('Prestamo')){?>
         					    <a href='/Socio/delete/<?=$socio->id?>'>Borrar</a>
+        					    <?php } ?>
         					</td>
         				</tr>
         			<?php } ?>

@@ -201,6 +201,12 @@ define('BOOK_IMAGE_FOLDER', '/images/books');
 //imagen por defecto para los libros que no tengan portadas
 define('DEFAULT_BOOK_IMAGE','cover.jpg');
 
+//carpeta para las fotos de los socios
+define('MEMBER_IMAGE_FOLDER', '/images/members');
+
+//imagen por defecto para los socios que no tengan foto
+define('DEFAULT_MEMBER_IMAGE', 'member.jpg');
+
 
 /* -------------------------------------------------------------
  * MENSAJE DE "ACEPTAR COOKIES"

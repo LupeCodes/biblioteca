@@ -14,6 +14,10 @@
 		
 		<!-- CSS -->
 		<?= $template->css() ?>
+		
+		<!-- JS -->
+		<script src="/js/BigPicture.js"></script>
+		<script src="/js/Preview.js"></script>
 
 		
 	</head>
@@ -32,60 +36,84 @@
 			<h1><?= APP_NAME ?></h1>
 			<h2>Editar libro</h2>
 			
-			<form method="POST" action="/libro/update">
-			     <!-- input oculto que contiene el id del libro a actualizar -->
-				 <input type="hidden" name="id" value="<?= $libro->id ?>">
+			<section class="flex-container gap2">
 			
-				<div class="flex2">
-        			<label>ISBN</label>
-        			<input type="text" name="isbn" value="<?= old('isbn', $libro->isbn) ?>">
-        			<br>
-        			<label>Título</label>
-        			<input type="text" name="titulo" value="<?= old('titulo', $libro->titulo) ?>">
-        			<br>
-        			<label>Editorial</label>
-        			<input type="text" name="editorial" value="<?= old('editorial', $libro->editorial) ?>">
-        			<br>
-        			<label>Autor</label>
-        			<input type="text" name="autor" value="<?= old('autor'), $libro->autor ?>">
-        			<br>
-        			<label>Idioma</label>
-        			<select name="idioma">
-        				<option value="Castellano" <?=$libro->idioma=='Castellano'? 'selected':''?>>
-        					Castellano</option>
-        				<option value="Catalán" <?=$libro->idioma=='Catalán'? 'selected':''?>>
-        					Catalán</option>
-        				<option value="Inglés" <?=$libro->idioma=='Inglés'? 'selected':''?>>
-        					Inglés</option>	
-        				<option value="Otros" <?=$libro->idioma=='Otros'? 'selected':''?>>
-        					Otros</option>
-        			</select>
-        			<br>
-        			<label>Edición</label>
-        			<input type="number" min="0" name="edicion" value="<?= old('edicion', $libro->edicion) ?>">
-        			<br>
-        			<label>Año</label>
-        			<input type="number" name="anyo" value="<?= old('anyo', $libro->anyo) ?>">
-        			<br>
-        			<label>Edad Recomendada</label>
-        			<input type="number" min="0" max="99" name="edadrecomendada" value="<?= old('edadrecomendada', $libro->edadrecomendada) ?>">
-        			<br>
-        			<label>Páginas</label>
-        			<input type="number" name="paginas" value="<?= old('paginas', $libro->paginas) ?>">
-        			<br>
-        			<label>Características</label>
-        			<input type="text" name="caracteristicas" value="<?= old('caracteristicas', $libro->caracteristicas) ?>">
-        			<br>
-        			<label>Sinopsis</label>
-        			<textarea name="sinopsis"><?= old('sinopsis'), $libro->sinopsis ?></textarea>
-        			<br>
-        			
-        			<div class="centered mt2">
-        				<input type="submit" class="button" name="actualizar" value="Actualizar">
-        				<input type="reset" class="button"  value="Reset">
-        			</div>
-        		</div>
-			</form>
+    			<form method="POST" action="/libro/update" class="flex2 no-border no-shadow"
+    				enctype="multipart/form-data">
+    			     <!-- input oculto que contiene el id del libro a actualizar -->
+    				 <input type="hidden" name="id" value="<?= $libro->id ?>">
+    			
+    				<div class="flex2">
+            			<label>ISBN</label>
+            			<input type="text" name="isbn" value="<?= old('isbn', $libro->isbn) ?>">
+            			<br>
+            			<label>Título</label>
+            			<input type="text" name="titulo" value="<?= old('titulo', $libro->titulo) ?>">
+            			<br>
+            			<label>Editorial</label>
+            			<input type="text" name="editorial" value="<?= old('editorial', $libro->editorial) ?>">
+            			<br>
+            			<label>Autor</label>
+            			<input type="text" name="autor" value="<?= old('autor'), $libro->autor ?>">
+            			<br>
+            			<label>Portada</label>
+            			<input type="file" name="portada" accept="image/*" id="file-with-preview">
+            			<br>
+            			<label>Idioma</label>
+            			<select name="idioma">
+            				<option value="Castellano" <?=$libro->idioma=='Castellano'? 'selected':''?>>
+            					Castellano</option>
+            				<option value="Catalán" <?=$libro->idioma=='Catalán'? 'selected':''?>>
+            					Catalán</option>
+            				<option value="Inglés" <?=$libro->idioma=='Inglés'? 'selected':''?>>
+            					Inglés</option>	
+            				<option value="Otros" <?=$libro->idioma=='Otros'? 'selected':''?>>
+            					Otros</option>
+            			</select>
+            			<br>
+            			<label>Edición</label>
+            			<input type="number" min="0" name="edicion" value="<?= old('edicion', $libro->edicion) ?>">
+            			<br>
+            			<label>Año</label>
+            			<input type="number" name="anyo" value="<?= old('anyo', $libro->anyo) ?>">
+            			<br>
+            			<label>Edad Recomendada</label>
+            			<input type="number" min="0" max="99" name="edadrecomendada" value="<?= old('edadrecomendada', $libro->edadrecomendada) ?>">
+            			<br>
+            			<label>Páginas</label>
+            			<input type="number" name="paginas" value="<?= old('paginas', $libro->paginas) ?>">
+            			<br>
+            			<label>Características</label>
+            			<input type="text" name="caracteristicas" value="<?= old('caracteristicas', $libro->caracteristicas) ?>">
+            			<br>
+            			<label>Sinopsis</label>
+            			<textarea name="sinopsis"><?= old('sinopsis'), $libro->sinopsis ?></textarea>
+            			<br>
+            			
+            			<div class="centered mt2">
+            				<input type="submit" class="button" name="actualizar" value="Actualizar">
+            				<input type="reset" class="button"  value="Reset">
+            			</div>
+            		</div>
+				</form>
+				
+				<figure class="flex1 centrado no-shadow">
+					<img src="<?=BOOK_IMAGE_FOLDER.'/'.($libro->portada ?? DEFAULT_BOOK_IMAGE)?>"
+						class="cover enlarge-image" alt="Portada de <?= $libro->titulo ?>"
+						id="preview-image">
+					<figcaption>Portada de <?="$libro->titulo, de $libro->autor" ?></figcaption>
+					
+					<!-- Boton para eliminar la portada (sin cambiar nada más) -->
+					<?php if($libro->portada){?>
+					<form method="POST" action="/libro/dropcover" class="no-border no-shadow">
+						<input type="hidden" name="id" value="<?=$libro->id?>">
+						<input type="submit" class="button-danger"
+							name="borrar" value="Eliminar portada">
+					</form>
+					<?php } ?>
+				</figure>
+			
+			</section>
 			
 			<section>	
         		<form class="w50 m0 no-border" method="POST" action="/Libro/addtema">

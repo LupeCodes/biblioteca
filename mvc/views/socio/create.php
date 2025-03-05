@@ -14,6 +14,9 @@
 		
 		<!-- CSS -->
 		<?= $template->css() ?>
+		
+		<!-- JS -->
+		<script src="/js/Preview.js"></script>
 
 		
 	</head>
@@ -32,7 +35,8 @@
 			<h1><?= APP_NAME ?></h1>
 			<h2>Nuevo socio</h2>
 			
-			<form method="POST" enctype="multipart/form-data" action="/socio/store">
+			<form method="POST" enctype="multipart/form-data" 
+				class="flex-container gap2" action="/socio/store">
 			
 				<div class="flex2">
         			<label>Nombre:</label>
@@ -43,6 +47,9 @@
         			<br>
         			<label>DNI:</label>
         			<input type="text" name="dni">
+        			<br>
+        			<label>Foto</label>
+        			<input type="file" name="foto" accept="image/*" id="file-with-preview">
         			<br>
         			<label>Nacimiento:</label>
         			<input type="date" name="nacimiento">
@@ -70,7 +77,13 @@
         				<input type="submit" class="button" name="guardar" value="Guardar">
         				<input type="reset" class="button"  value="Reset">
         			</div>
-    			</div>			
+    			</div>
+    			<figure class="flex2 centrado p2">
+            		<img src="<?=MEMBER_IMAGE_FOLDER.'/'.DEFAULT_MEMBER_IMAGE?>"
+            			class="cover" id="preview-image" alt="previsualizacion de la foto"
+            			alt="Foto de <?=$socio->nombre?>">
+            		<figcaption>Previsualización de la foto</figcaption>	
+            	</figure>			
 			</form>
 			
 			<div class="centrado my2">

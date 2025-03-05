@@ -15,6 +15,8 @@
 		<!-- CSS -->
 		<?= $template->css() ?>
 
+		<!-- JS -->
+		<script src="/js/Preview.js"></script>
 		
 	</head>
 	<body>
@@ -32,7 +34,8 @@
 			<h1><?= APP_NAME ?></h1>
 			<h2>Nuevo libro</h2>
 			
-			<form method="POST" enctype="multipart/form-data" action="/libro/store">
+			<form method="POST" enctype="multipart/form-data" 
+				action="/libro/store" class="flex-container gap2">
 			
 				<div class="flex2">
         			<label>ISBN</label>
@@ -46,6 +49,9 @@
         			<br>
         			<label>Autor</label>
         			<input type="text" name="autor" value="<?= old('autor') ?>">
+        			<br>
+        			<label>Portada</label>
+        			<input type="file" name="portada" accept="image/*"  id="file-with-preview">
         			<br>
         			<label>Idioma</label>
         			<select name="idioma">
@@ -89,7 +95,15 @@
         				<input type="submit" class="button" name="guardar" value="Guardar">
         				<input type="reset" class="button"  value="Reset">
         			</div>
-    			</div>			
+    			</div>	
+    			
+    			<figure class="flex2 centrado p2">
+            		<img src="<?=BOOK_IMAGE_FOLDER.'/'.DEFAULT_BOOK_IMAGE?>"
+            			class="cover" id="preview-image" alt="previsualizacion de la portada"
+            			alt="Portada del libro <?=$libro->titulo?>">
+            		<figcaption>Previsualización de la portada</figcaption>	
+            	</figure>
+            			
 			</form>
 			
 			<div class="centrado my2">
