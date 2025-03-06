@@ -101,7 +101,8 @@ class Base implements TemplateInterface{
                  $html .= "<span class='pc'> eres <a class='negrita' href='/Admin'>administrador</a>.</span>";
             
             // pone la imagen de perfil y el enlace a logout
-            $html .= "  <img class='xx-small middle my1' src='/images/users/".($user->picture ?? 'default.png')."' alt='Imagen de perfil'>
+            $html .= "  <img class='xx-small middle my1' 
+                        src='".USER_IMAGE_FOLDER."/".($user->picture ?? DEFAULT_USER_IMAGE)."' alt='Imagen de perfil'>
                         <a class='button' href='/Logout'>LogOut</a>
                      </div>";
 
@@ -156,12 +157,21 @@ class Base implements TemplateInterface{
         
         // parte izquierda (operaciones para todos los usuarios)
         $html = "<menu class='menu'>";
+        
+        //cosas para todos los usuarios
         $html .=   "<li><a href='/'>Inicio</a></li>";
-        $html .=   "<li><a href='/Panel'>Panel del bibliotecario</a></li>";
         $html .=   "<li><a href='/Libro'>Lista de Libros</a></li>";
         $html .=   "<li><a href='/Tema'>Lista de Temas</a></li>";
         $html .=   "<li><a href='/Contacto'>Contacto</a></li>";
-          
+        
+        //esto solo lo verá el bibliotecario
+        if(Login::role('ROLE_LIBRARIAN'))
+            $html .= "<li><a href='/Panel'>Panel del bibliotecario</a></li>";
+        
+        //esto solo lo verá el bibliotecario
+        if(Login::role('ROLE_ADMIN'))
+            $html .= "<li><a href='/Panel/admin'>Panel del administrador</a></li>";
+        
         // parte derecha (solamente para usuarios concretos)
  
         // enlace a los tests de ejemplo (solamente administrador o rol de test)

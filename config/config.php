@@ -133,7 +133,8 @@ define('USER_ROLES', [
     'Test'          => 'ROLE_TEST',
     'API'           => 'ROLE_API',
     'Estudiante'    => 'ROLE_STUDENT',
-    'Bloqueado'     => 'ROLE_BLOCKED'
+    'Bloqueado'     => 'ROLE_BLOCKED',
+    'Bibliotecario' => 'ROLE_LIBRARIAN'
 ]);
 
 // Rol para el administrador (debe ser uno de los que están en la lista anterior).
@@ -145,7 +146,7 @@ define('ADMIN_ROLE', 'ROLE_ADMIN');
  * LOGIN
  * -------------------------------------------------------------*/
 
-define('REDIRECT_AFTER_LOGIN', '/');                // Redirección tras login.
+define('REDIRECT_AFTER_LOGIN', '/User/home');                // Redirección tras login.
 
 define('LOG_LOGIN_ERRORS', false);                 // Guardar errores de login en fichero de log.
 define('LOGIN_ERRORS_FILE', '../logs/login.log');  // Nombre del fichero para los errores de login.
@@ -206,6 +207,12 @@ define('MEMBER_IMAGE_FOLDER', '/images/members');
 
 //imagen por defecto para los socios que no tengan foto
 define('DEFAULT_MEMBER_IMAGE', 'member.jpg');
+
+//carpeta para las fotos de los usuarios
+define('USER_IMAGE_FOLDER', '/images/users');
+
+//imagen por defecto para los usuarios que no tengan foto
+define('DEFAULT_USER_IMAGE', 'default.png');
 
 
 /* -------------------------------------------------------------
