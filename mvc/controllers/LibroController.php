@@ -64,6 +64,10 @@ class LibroController extends Controller{
     
     //METODO CREATE-------------------------------------------
     public function create(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         return view('libro/create',[
             'listaTemas' => Tema::orderby('tema')
         ]);
@@ -72,6 +76,9 @@ class LibroController extends Controller{
     
     //METODO STORE----------------------------------------------
     public function store(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //comprueba que la petición venga del formulario
         if(!request()->has('guardar'))
@@ -161,6 +168,9 @@ class LibroController extends Controller{
     //EDIT------------------------------------------------------------
     public function edit(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         //busca el libro con ese ID
         $libro = Libro::findOrFail($id, "No se encontró el libro");
         $ejemplares = $libro->hasMany('Ejemplar');
@@ -182,6 +192,8 @@ class LibroController extends Controller{
     
     //METODO UPDATE-----------------------------------------------------
     public function update(){
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //si no llega el formulario...
         if(!request()->has('actualizar'))
@@ -256,6 +268,9 @@ class LibroController extends Controller{
     //METODO DELETE--------------------------------------------
     public function delete(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         $libro = Libro::findOrFail($id, "No existe el libro");
         
         return view('libro/delete', [
@@ -268,6 +283,9 @@ class LibroController extends Controller{
     
     //METODO DESTROY----------------------------------------------------------
     public function destroy(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //comprueba que llega el formulario de confirmación
         if(!request()->has('borrar'))
@@ -324,6 +342,9 @@ class LibroController extends Controller{
     //METODO ADDTEMA--------------------------------------------------
     public function addTema(){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         if (empty(request()->post('add')))
             throw new FormException("No se recibió el formulario.");
         
@@ -357,6 +378,10 @@ class LibroController extends Controller{
     
     //METODO REMOVETEMA----------------------------------------------------------
     public function removetema(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         //comprueba que llega el formulario
         if(empty(request()->post('idlibro')))
             throw new FormException("No se recibió el formulario");
@@ -389,6 +414,9 @@ class LibroController extends Controller{
     
     //metodo DROPCOVER para borrar una portada------------------
     public function dropcover(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //si no llega el formulario...
         if(!request()->has('borrar'))

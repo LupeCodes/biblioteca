@@ -83,6 +83,7 @@
     				<figure class="flex1 centrado">
     					<img src="<?= USER_IMAGE_FOLDER.'/'.DEFAULT_USER_IMAGE ?>" id="preview-image"
     							class="cover" alt="Previsualizacion de la imagen de perfil">
+    							<figcaption>Previsualización de la imagen de perfil</figcaption>
     				</figure>
     				
     			</div>

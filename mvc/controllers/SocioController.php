@@ -3,12 +3,19 @@ class SocioController extends Controller{
     
     //metodo por defecto
     public function index(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         return $this->list();
     }
     
     
     //LISTADO DE SOCIOS-----------------------------------
     public function list(int $page = 1){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //analiza si hay filtros, pone uno nuevo o quita el existente
         $filtro = Filter::apply('socios');
@@ -49,6 +56,9 @@ class SocioController extends Controller{
     //DETALLES DEL SOCIO---------------------------------------
     public function show(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         //lo buscamos con findOrFail porque nos ahorra hacer más comprobaciones
         $socio = Socio::findOrFail($id);    //busca el socio con ese ID
         
@@ -66,12 +76,19 @@ class SocioController extends Controller{
     
     //METODO CREATE-------------------------------------------
     public function create(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         return view('socio/create');
     }
     
     
     //METODO STORE----------------------------------------------
     public function store(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //comprueba que la petición venga del formulario
         if(!request()->has('guardar'))
@@ -157,6 +174,9 @@ class SocioController extends Controller{
     //EDIT------------------------------------------------------------
     public function edit(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         //busca el libro con ese ID
         $socio = Socio::findOrFail($id, "No se encontró el socio");
         
@@ -169,6 +189,9 @@ class SocioController extends Controller{
     
     //METODO UPDATE-----------------------------------------------------
     public function update(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //si no llega el formulario...
         if(!request()->has('actualizar'))
@@ -244,6 +267,9 @@ class SocioController extends Controller{
     //METODO DELETE--------------------------------------------
     public function delete(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         $socio = Socio::findOrFail($id, "No existe el socio");
         
         return view('socio/delete', [
@@ -254,6 +280,9 @@ class SocioController extends Controller{
     
     //METODO DESTROY----------------------------------------------------------
     public function destroy(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //comprueba que llega el formulario de confirmación
         if(!request()->has('borrar'))
@@ -307,6 +336,9 @@ class SocioController extends Controller{
     
     //metodo DROPFOTO para borrar una foto------------------
     public function dropfoto(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //si no llega el formulario...
         if(!request()->has('borrar'))

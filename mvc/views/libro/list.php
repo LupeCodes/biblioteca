@@ -91,10 +91,12 @@
         					<td><?=$libro->editorial?></td>
         					<td><?=$libro->ejemplares?></td>
         					<td><a href='/Libro/show/<?=$libro->id?>'>Ver</a>
-        					    <a href='/Libro/edit/<?=$libro->id?>'>Editar</a>
-        					    <?php if(!$libro->ejemplares){?>
-        					    <a href='/Libro/delete/<?=$libro->id?>'>Borrar</a>
-        					    <?php } ?>
+        						<?php if(Login::role('ROLE_LIBRARIAN')){?>
+            					    <a href='/Libro/edit/<?=$libro->id?>'>Editar</a>
+            					    <?php if(!$libro->ejemplares){?>
+            					    <a href='/Libro/delete/<?=$libro->id?>'>Borrar</a>
+            					    <?php } ?>
+            					<?php } ?>		    
         					</td>
         				</tr>
         			<?php } ?>

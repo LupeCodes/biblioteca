@@ -79,8 +79,10 @@
         					<td><a href='/Tema/show/<?=$tema->id?>'><?=$tema->tema?></a></td>
         					<td><?=$tema->descripcion?></td>
         					<td><a href='/Tema/show/<?=$tema->id?>'>Ver</a>
-        					    <a href='/Tema/edit/<?=$tema->id?>'>Editar</a>
-        					    <a href='/Tema/delete/<?=$tema->id?>'>Borrar</a>
+        						<?php if(Login::role('ROLE_LIBRARIAN')){?>
+            					    <a href='/Tema/edit/<?=$tema->id?>'>Editar</a>
+            					    <a href='/Tema/delete/<?=$tema->id?>'>Borrar</a>
+            					<?php } ?>
         					</td>
         				</tr>
         			<?php } ?>

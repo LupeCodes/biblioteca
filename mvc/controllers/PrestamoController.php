@@ -3,12 +3,20 @@ class PrestamoController extends Controller{
     
     //metodo por defecto
     public function index(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         return $this->list();
     }
     
     
     //LISTADO DE PRESTAMOS-----------------------------------
     public function list(int $page = 1){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         $filtro = Filter::apply('prestamos');
         $limit = RESULTS_PER_PAGE;  //numero de resultados x pagina, en el config
         
@@ -43,6 +51,10 @@ class PrestamoController extends Controller{
     
     //METODO CREATE-------------------------------------------
     public function create(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         return view('prestamo/create');
     }
     
@@ -50,6 +62,9 @@ class PrestamoController extends Controller{
     
     //METODO STORE----------------------------------------------
     public function store(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //comprueba que la petición venga del formulario
         if(!request()->has('guardar'))
@@ -101,6 +116,9 @@ class PrestamoController extends Controller{
     //METODO DEVOLUCIÓN-------------------------------------------------------------------
     public function devolucion(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         $prestamo = Prestamo::findOrFail($id, 'No se encontró el préstamo');
         
         $prestamo->devolucion = date('Y-m-d');
@@ -138,6 +156,9 @@ class PrestamoController extends Controller{
     //METODO AMPLIAR-------------------------------------------------------------------
     public function ampliar(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         //busca el prestamo con ese ID
         $prestamo = Prestamo::findOrFail($id, "No se encontró el prestamo");
         $vprestamo = V_prestamo::findOrFail($id, "No se encontró el prestamo");
@@ -154,6 +175,9 @@ class PrestamoController extends Controller{
     //METODO INCIDENCIA-------------------------------------------------------------------
     public function incidencia(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         //busca el prestamo con ese ID
         $prestamo = Prestamo::findOrFail($id, "No se encontró el prestamo");
         $vprestamo = V_prestamo::findOrFail($id, "No se encontró el prestamo");
@@ -169,6 +193,9 @@ class PrestamoController extends Controller{
     
     //METODO UPDATE
     public function update(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //si no llega el formulario...
         if(!request()->has('actualizar'))

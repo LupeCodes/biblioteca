@@ -71,26 +71,29 @@
 				    echo "<div class='warning p2'><p>No se han indicado temas</p></div>";
 				}else{?>
 				
-				<table class="table w100">
-					<tr>
-						<th>ID</th><th>Tema</th>
-					</tr>
-				<?php foreach($temas as $tema){?>
-					<tr>
-						<td><?=$tema->id?></td>
-						<td><a href='/Tema/show/<?=$tema->id?>'><?=$tema->tema?>
-							</a></td>
-					</tr>
-				<?php } ?>		
-				</table>
-			<?php } ?>	
+    				<table class="table w100">
+    					<tr>
+    						<th>ID</th><th>Tema</th>
+    					</tr>
+    				<?php foreach($temas as $tema){?>
+    					<tr>
+    						<td><?=$tema->id?></td>
+    						<td><a href='/Tema/show/<?=$tema->id?>'><?=$tema->tema?>
+    							</a></td>
+    					</tr>
+					<?php } ?>		
+    				</table>
+    			<?php } ?>	
 			</section>
 			
 			<section>
 				<h3>Ejemplares del libro <b><?=$libro->titulo?></b></h3>
 				<table class="table w100 centered-block">
         			<tr>
-        				<th>ID</th><th>Año</th><th>Precio</th><th>Estado</th><th>Operaciones</th>
+        				<th>ID</th><th>Año</th><th>Precio</th><th>Estado</th>
+        				<?php if(Login::role('ROLE_LIBRARIAN')){?>
+        					<th>Operaciones</th>
+        				<?php } ?>
         			</tr>
         			<?php foreach($ejemplares as $ejemplar){?>
         				<tr>
@@ -98,17 +101,21 @@
         					<td><?=$ejemplar->anyo?></td>
         					<td><?=$ejemplar->precio?></td>
         					<td><?=$ejemplar->estado?></td>
-        					<td><a href='/Ejemplar/edit/<?=$ejemplar->id?>'>Editar</a></td>
+        					<?php if(Login::role('ROLE_LIBRARIAN')){?>
+        						<td><a href='/Ejemplar/edit/<?=$ejemplar->id?>'>Editar</a></td>
+        					<?php } ?>
         				</tr>
-        			<?php } //mm ?>
+        			<?php } ?>
         		</table>
 			</section>
 			
 			<div clas="centrado">
 				<a class="button" onclick="history.back()">Atrás</a>
 				<a class="button" href="/libro/list">Lista de libros</a>
-				<a class="button" href="/libro/edit/<?= $libro->id ?>">Editar</a>
-				<a class="button" href="/libro/delete/<?= $libro->id ?>">Borrar</a>
+				<?php if(Login::role('ROLE_LIBRARIAN')){?>
+    				<a class="button" href="/libro/edit/<?= $libro->id ?>">Editar</a>
+    				<a class="button" href="/libro/delete/<?= $libro->id ?>">Borrar</a>
+    			<?php } ?>
 			</div>
 		</main>
 		<?= $template->footer() ?>

@@ -64,6 +64,10 @@ class TemaController extends Controller{
     
     //METODO CREATE-------------------------------------------
     public function create(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         return view('tema/create');
     }
     
@@ -71,6 +75,9 @@ class TemaController extends Controller{
     
     //METODO STORE----------------------------------------------
     public function store(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //comprueba que la petición venga del formulario
         if(!request()->has('guardar'))
@@ -121,6 +128,9 @@ class TemaController extends Controller{
     //EDIT------------------------------------------------------------
     public function edit(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         //busca el tema con ese ID
         $tema = Tema::findOrFail($id, "No se encontró el tema");
         
@@ -133,6 +143,9 @@ class TemaController extends Controller{
     
     //METODO UPDATE-----------------------------------------------------
     public function update(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //si no llega el formulario...
         if(!request()->has('actualizar'))
@@ -170,6 +183,9 @@ class TemaController extends Controller{
     //METODO DELETE--------------------------------------------
     public function delete(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         $tema = Tema::findOrFail($id, "No existe el tema");
         
         return view('tema/delete', [
@@ -181,6 +197,9 @@ class TemaController extends Controller{
     
     //METODO DESTROY----------------------------------------------------------
     public function destroy(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //comprueba que llega el formulario de confirmación
         if(!request()->has('borrar'))

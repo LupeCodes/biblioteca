@@ -4,6 +4,9 @@ class EjemplarController extends Controller{
     //CREATE---------------------------------------------
     public function create(int $idlibro = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         $libro = Libro::findOrFail($idlibro);
         
         return view('ejemplar/create',[
@@ -15,6 +18,10 @@ class EjemplarController extends Controller{
     
     //STORE-----------------------------------------------------------
     public function store(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         //comprobamos que el formulario llega con los datos
         if(!request()->has('guardar'))
             throw new FormException('No se recibieron los datos del ejemplar');
@@ -49,6 +56,9 @@ class EjemplarController extends Controller{
     //EDIT------------------------------------------------------------
     public function edit(int $id = 0){
         
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
+        
         //busca el libro con ese ID
         $ejemplar = Ejemplar::findOrFail($id, "No se encontró el ejemplar");
         
@@ -61,6 +71,9 @@ class EjemplarController extends Controller{
     
     //METODO UPDATE-----------------------------------------------------
     public function update(){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //si no llega el formulario...
         if(!request()->has('actualizar'))
@@ -103,6 +116,9 @@ class EjemplarController extends Controller{
     
     //DESTROY--------------------------------------------------------------------
     public function destroy(int $id = 0){
+        
+        //antes de nada, xa que solo lo pueda hacer el bibliotecario
+        Auth::role('ROLE_LIBRARIAN');
         
         //lo recuperamos de la BDD
         $ejemplar = Ejemplar::findOrFail($id, "No se encontró el ejemplar");

@@ -52,8 +52,10 @@
         					<td><?=$libro->autor?></td>
         					<td><?=$libro->editorial?></td>
         					<td><a href='/Libro/show/<?=$libro->id?>'>Ver</a>
-        					    <a href='/Libro/edit/<?=$libro->id?>'>Editar</a>
-        					    <a href='/Libro/delete/<?=$libro->id?>'>Borrar</a>
+        						<?php if(Login::role('ROLE_LIBRARIAN')){?>
+            					    <a href='/Libro/edit/<?=$libro->id?>'>Editar</a>
+            					    <a href='/Libro/delete/<?=$libro->id?>'>Borrar</a>
+            					<?php } ?>
         					</td>
         				</tr>
         			<?php } ?>
@@ -63,8 +65,10 @@
 			<div clas="centrado">
 				<a class="button" onclick="history.back()">Atrás</a>
 				<a class="button" href="/tema/list">Lista de temas</a>
-				<a class="button" href="/tema/edit/<?= $tema->id ?>">Editar</a>
-				<a class="button" href="/tema/delete/<?= $tema->id ?>">Borrar</a>
+				<?php if(Login::role('ROLE_LIBRARIAN')){?>
+    				<a class="button" href="/tema/edit/<?= $tema->id ?>">Editar</a>
+    				<a class="button" href="/tema/delete/<?= $tema->id ?>">Borrar</a>
+				<?php } ?>
 			</div>
 		</main>
 		<?= $template->footer() ?>
