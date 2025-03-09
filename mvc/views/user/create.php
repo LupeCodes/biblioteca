@@ -2,11 +2,11 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8">
-		<title>Nuevo socio</title>
+		<title>Nuevo usuario</title>
 		
 		<!-- META -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="nuevo socio en <?= APP_NAME ?>">
+		<meta name="description" content="nuevo usuario en <?= APP_NAME ?>">
 		<meta name="author" content="Lupe Jiménez">
 		
 		<!-- FAVICON -->
@@ -22,11 +22,11 @@
 	</head>
 	<body>
 		<?= $template->login() ?>
-		<?= $template->header('Nuevo socio') ?>
+		<?= $template->header('Nuevo Usuario') ?>
 		<?= $template->menu() ?>
 		<?= $template->breadCrumbs([
-		    'Socios' => '/Socio/list',
-		    'Nuevo Socio' => null
+		    'Usuarios' => '/Usuario/list',
+		    'Nuevo Usuario' => null
 		    //'Detalles del libro' => 'Libro/show'
 		]) ?>
 		<?= $template->messages() ?>

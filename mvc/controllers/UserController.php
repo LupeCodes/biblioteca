@@ -103,4 +103,43 @@ class UserController extends Controller{
         
     }// FIN DE STORE
     
+    //FUNCTION LIST-----------------------------------------------------------------------
+    public function list(){
+        //antes de nada, xa que solo lo pueda hacer el admin
+        Auth::role('ROLE_ADMIN');
+        
+        //de momento sin paginacion ni filtros, ya lo añadimos luego
+        $users = User::all();
+        
+        return view('user/list', [
+            'users' => $users
+        ]);
+    }//FIN LIST
+    
+    //PARA VER LOS DETALLES DEL USUARIO
+    public function show(int $id = 0){
+        //antes de nada, xa que solo lo pueda hacer el admin
+        Auth::role('ROLE_ADMIN');
+        
+        $user = User::findOrFail($id, "No se encontró el usuario");
+        
+        return view('user/show', [
+            'user' => $user
+        ]);
+    }//FIN DE SHOW
+    
+    
+    
+    //EDIT, MANDAR A LA VISTA-----------------------------------------
+    public function edit(int $id = 0){
+        
+        Auth::role('ROLE_ADMIN');
+        
+        $user = User::findOrFail($id, "No se encontró el usuario");
+        
+        return view('user/edit', [
+            'user' => $user
+        ]);
+    }
+    
 }// FIN DE CLASE

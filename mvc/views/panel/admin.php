@@ -2,11 +2,11 @@
 <html lang="es">
 	<head>
 		<meta charset="UTF-8">
-		<title>Panel del bibliotecario</title>
+		<title>Panel del administrador</title>
 		
 		<!-- META -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="Panel del bibliotecario en <?= APP_NAME ?>">
+		<meta name="description" content="Panel del administrador en <?= APP_NAME ?>">
 		<meta name="author" content="Lupe Jiménez">
 		
 		<!-- FAVICON -->
@@ -19,10 +19,10 @@
 	</head>
 	<body>
 		<?= $template->login() ?>
-		<?= $template->header('Panel del bibliotecario') ?>
+		<?= $template->header('Panel del administrador') ?>
 		<?= $template->menu() ?>
 		<?= $template->breadCrumbs([
-		    'Panel del bibliotecario' => null
+		    'Panel del administrador' => null
 		]) ?>
 		<?= $template->messages() ?>
 		
@@ -36,7 +36,7 @@
 				<section class="flex1">
 					<h2>Operaciones con usuarios</h2>
 					<ul>
-						<li><a href='/User'>Lista de usuarios</a></li>
+						<li><a href='/User/list'>Lista de usuarios</a></li>
 						<li><a href='/User/create'>Nuevo usuario</a></li>
 					</ul>
 				</section>
