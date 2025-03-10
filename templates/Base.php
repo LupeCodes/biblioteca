@@ -186,7 +186,7 @@ class Base implements TemplateInterface{
         if((Login::oneRole(ERROR_ROLES)) && (DB_ERRORS || LOG_ERRORS || LOG_LOGIN_ERRORS))
             $html .=   "<li><a href='/Error/list'>Errores</a></li>";
           
-        $html .=   "<li><a href='https://github.com/robertsallent/fastlight'>GitHub</a></li>";
+       // $html .=   "<li><a href='https://github.com/robertsallent/fastlight'>GitHub</a></li>";
             
         $html .= "</menu>";
         $html .= "</nav>";
@@ -454,9 +454,12 @@ class Base implements TemplateInterface{
         <footer class='flex-container left drop-shadow'>
             
             <div class='flex4 p2'>
-                <p><a class='negrita maxi cursiva' href='https://github.com/robertsallent/fastlight'>FastLight Framework</a></p>
+                
                 <p>
-                    Desarrollado por <a href='https://robertsallent.com'>
+                    Desarrollado por Lupe Jiménez. 
+                </p>
+                <p>
+                    Basado en <a href='https://github.com/robertsallent/fastlight'>FastLight Framework</a> desarrollado por <a href='https://robertsallent.com'>
                     Robert Sallent</a> para sus cursos de desarrollo de aplicaciones web (2022/2025).
                 </p>
             </div>

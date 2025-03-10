@@ -40,37 +40,37 @@
 			
 				<div class="flex2">
         			<label>Nombre:</label>
-        			<input type="text" name="nombre">
+        			<input type="text" name="nombre" value="<?= old('nombre', $socio->nombre) ?>">
         			<br>
         			<label>Apellidos:</label>
-        			<input type="text" name="apellidos">
+        			<input type="text" name="apellidos" value="<?= old('apellidos', $socio->apellidos) ?>">
         			<br>
         			<label>DNI:</label>
-        			<input type="text" name="dni">
+        			<input type="text" name="dni" value="<?= old('dni', $socio->dni) ?>">
         			<br>
         			<label>Foto</label>
         			<input type="file" name="foto" accept="image/*" id="file-with-preview">
         			<br>
         			<label>Nacimiento:</label>
-        			<input type="date" name="nacimiento">
+        			<input type="date" name="nacimiento" value="<?= old('nacimiento', $socio->nacimiento) ?>">
         			<br>
         			<label>eMail:</label>
-        			<input type="email"  name="email">
+        			<input type="email"  name="email" value="<?= old('email', $socio->email) ?>">
         			<br>
         			<label>Teléfono:</label>
-        			<input type="text"  name="telefono">
+        			<input type="text"  name="telefono" value="<?= old('telefono', $socio->telefono) ?>">
         			<br>
         			<label>Dirección:</label>
-        			<input type="text" name="direccion">
+        			<input type="text" name="direccion" value="<?= old('direccion', $socio->direccion) ?>">
         			<br>
         			<label>CP:</label>
-        			<input type="text" name="cp">
+        			<input type="text" name="cp" value="<?= old('cp', $socio->cp) ?>">
         			<br>
         			<label>Población:</label>
-        			<input type="text" name="poblacion">
+        			<input type="text" name="poblacion" value="<?= old('poblacion', $socio->poblacion) ?>">
         			<br>
         			<label>Provincia:</label>
-        			<input type="text" name="provincia">
+        			<input type="text" name="provincia" value="<?= old('provincia', $socio->provincia) ?>">
         			<br>
         			
         			<div class="centered mt2">

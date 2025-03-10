@@ -118,6 +118,12 @@ class SocioController extends Controller{
             //vamos a evitar ir a la página de error y volveremos
             //al formulario "nuevo socio"
             try{
+                //Primero validamos los campos
+                if($errores = $socio->validate())
+                    throw new ValidationException(
+                        "<br>".arrayToString($errores, false, false, ".<br>")
+                        );
+                
                 //guarda el socio en la base de datos
                 $socio->save();
                 
@@ -166,6 +172,11 @@ class SocioController extends Controller{
                 //redirigimos a la edicion del socio
                 //por si se quiere volver a subir la foto
                 redirect("/Socio/edit/$socio->id");
+            //el catch del validate
+            }catch(ValidationException $e){
+                Session::error("Errores de validación. ".$e->getMessage());
+                //regresa al formulario de creacion de socio
+                return redirect("/socio/create");
             }
     }//FIN DE FUNCION STORE
     
@@ -217,6 +228,13 @@ class SocioController extends Controller{
             
             //intentamos actualizar el socio
             try{
+                //primero validamos
+                if($errores = $libro->validate())
+                    throw new ValidationException(
+                        "<br>".arrayToString($errores, false, false,".<br>")
+                        );
+                
+                //y luego ya updateamos
                 $socio->update();
                 
                 //ahora recupera la portada como objeto UploadedFile (o null si no llega)

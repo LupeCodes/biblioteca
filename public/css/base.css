@@ -377,7 +377,7 @@ span.path::before{
 }
 
 .button{
-	background: linear-gradient(var(--primary-soft-color), var(--primary-bg-color));
+	background: linear-gradient(rgb(106, 188, 235), rgb(22, 74, 185));
 }
 .button:hover{
 	background: var(--primary-soft-color);
@@ -428,7 +428,7 @@ span.path::before{
 	font-family: helvetica;
 	color: var(--th-font-color);
 	text-shadow: 2px 2px 2px var(--text-shadow);
-	background-color: var(--th-bg-color);
+	background-color: rgb(20, 72, 184);
 	padding: 10px;
 	font-size: 1.1rem;
 	text-align: left;
@@ -901,7 +901,7 @@ main{
 
 /* footer principal de la página (directamente dentro del body) ---- */
 body>footer{
-	background: linear-gradient(45deg, var(--primary-bg-color), var(--primary-soft-color));
+	background: linear-gradient(45deg, rgb(20, 72, 184), rgb(107, 190, 236));
 	color: var(--primary-font-color);
 	border-radius: 3px;
 }

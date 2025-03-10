@@ -111,6 +111,14 @@ class LibroController extends Controller{
         //vamos a evitar ir a la página de error y volveremos
         //al formulario "nuevo libro"
         try{
+            //Primero validamos los campos
+            //si la lista de errores está vacia, seguimos, pero si tiene algo
+            //lanzamos una excepcion de validacion con los errores en el mensaje
+            if($errores = $libro->validate())
+                throw new ValidationException(
+                    "<br>".arrayToString($errores, false, false, ".<br>")
+                    );
+                
             //guarda el libro en la base de datos
             $libro->save();
             $libro->addTema($idtema);
@@ -161,6 +169,14 @@ class LibroController extends Controller{
             //redirigimos a la edicion del libro
             //por si se quiere volver a intentar subir la imagen
             redirect("/Libro/edit/$libro->id");
+        
+        //y aqui el catch de la validacion
+        }catch(ValidationException $e){
+            
+            Session::error("Errores de validación. ".$e->getMessage());
+            
+            //regresa al formulario de creacion de libro
+            return redirect("/Libro/create");
         }
     }//FIN DE FUNCION STORE
     
@@ -220,6 +236,13 @@ class LibroController extends Controller{
         
         //intentamos actualizar el libro
         try{
+            //Primero validamos los campos
+            if($errores = $libro->validate())
+                throw new ValidationException(
+                    "<br>".arrayToString($errores, false, false, ".<br>")
+                    );
+                
+            //y ahora updateamos
             $libro->update();
             
             //ahora recupera la portada como objeto UploadedFile (o null si no llega)
@@ -259,6 +282,12 @@ class LibroController extends Controller{
                 throw new UploadException($e->getMessage());
             
             return redirect("/Libro/edit/$id"); //redirecciona a la edicion
+        
+        //el catch de la validacion    
+        }catch(ValidationException $e){
+            Session::error("Errores de validacion. ".$e->getMessage());
+            
+            return redirect("/Libro/edit/$id");
         }
         
     }
