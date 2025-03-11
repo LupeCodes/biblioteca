@@ -142,4 +142,8 @@ class UserController extends Controller{
         ]);
     }
     
+    
+    //FALTA LA FUNCTION UPDATE----------------------------------------
+    //TODO FUNCTION UPDATE
+    
 }// FIN DE CLASE

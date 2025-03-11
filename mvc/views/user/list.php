@@ -60,7 +60,9 @@
 							<td><?php foreach($user->roles as $valor){
 							    echo $valor.' ';
 							} ?></td>
-							<td><a href='/User/show/<?=$user->id?>'>Ver</a></td>
+							<td><a href='/User/show/<?=$user->id?>'>Ver</a>
+								<a href='/User/edit/<?=$user->id?>'>Editar</a>
+							</td>
 						</tr>
 					<?php } ?>
 				
