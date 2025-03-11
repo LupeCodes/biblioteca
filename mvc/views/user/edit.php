@@ -76,18 +76,16 @@
     				   Este desplegable se genera a partir de la lista de
     				   roles indicados en el fichero config.php
     				   Añadid a esa lista el rol: 'Bibliotecario' => 'ROLE_LIBRARIAN'
+    				   
+    		
     				 -->
-    				 <form class="w50 m0 no-border" method="POST" action="<?= $user->addRole($valor) ?>">
-        				<input type="hidden"  value="<?= $valor ?>">
         				<select name="roles">
         				
         					<?php foreach(USER_ROLES as $roleName => $roleValue){?>
         				 		<option value="<?= $roleValue ?>"><?= $roleName ?></option>
         				 	<?php } ?>	
         				</select>
-        				<input class="button-success" type="submit" name="add" value="Añadir rol">
-            			<br>
-        			</form>
+        				
     			</div>	
     				
     				

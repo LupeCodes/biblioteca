@@ -146,4 +146,9 @@ class UserController extends Controller{
     //FALTA LA FUNCTION UPDATE----------------------------------------
     //TODO FUNCTION UPDATE
     
+    
+    //TODO addRole-----------------------------------------------------
+    
+    //TODO removeRole--------------------------------------------------
+    
 }// FIN DE CLASE
