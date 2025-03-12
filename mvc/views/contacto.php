@@ -22,8 +22,7 @@
 		<?= $template->header('Crear Tema') ?>
 		<?= $template->menu() ?>
 		<?= $template->breadCrumbs([
-		    'Temas' => '/Tema/list',
-		    'Nuevo Tema' => null
+		    'Contacto' => null
 		]) ?>
 		<?= $template->messages() ?>
 		

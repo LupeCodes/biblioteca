@@ -27,7 +27,8 @@
 		<?= $template->menu() ?>
 		<?= $template->breadCrumbs([
 		    'Libros' => '/Libro/list',
-		    $libro->titulo => null
+		    $libro->titulo => '/Libro/show/$libro->id',
+		    'Editar libro' => NULL
 		    //'Detalles del libro' => 'Libro/show'
 		]) ?>
 		<?= $template->messages() ?>
