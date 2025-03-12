@@ -151,4 +151,28 @@ class UserController extends Controller{
     
     //TODO removeRole--------------------------------------------------
     
+    
+    //Comprueba si el email a existe en la tabla users-----------------
+    //al crear un nuevo user-------------------------------------------
+    public function checkemail(string $email = ''):JsonResponse{
+        //esta operacion solo la puede hacer el administrador, 
+        //si el usuario no tiene permisos para hacerla
+        //retornaremos una JsonResponse de error
+        if(!Login::isAdmin()){
+            return new JsonResponse(
+                ['status' => 'ERROR'],  //array con los datos
+                'Operacion no autorizada',  //mensaje adicional
+                401,                    //codigo http
+                'NOT AUTHORIZED'        //mensaje HTTP
+                );
+        }
+        //recupera el usuario con ese email
+        $user = User::whereExactMatch(['email' => $email]);
+        
+        //retorna una nueva JsonResponse con el campo "found" a
+        //true o false dependiendo de si lo ha encontrado o no
+        return new JsonResponse([
+            'found' => $user ? true : false
+        ]);
+    }//FIN DE CHECKEMAIL------------------
 }// FIN DE CLASE

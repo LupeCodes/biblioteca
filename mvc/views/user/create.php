@@ -17,6 +17,8 @@
 		
 		<!-- JS -->
 		<script src="/js/Preview.js"></script>
+		<script src="/js/Comprobacion.js"></script>
+		
 
 		
 	</head>
@@ -45,8 +47,8 @@
     					<input type="text" name="displayname">
     					<br>
     					<label>Email</label>
-    					<input type="email" name="email" id="inputEmail">
-    					<span id="comprobacion" class='info'></span>
+    					<input type="email" name="email" id="email">
+    					<span id="comprobacion" class='mini'></span>
     					<br>
     					<label>Telefono</label>
     					<input type="text" name="phone">
