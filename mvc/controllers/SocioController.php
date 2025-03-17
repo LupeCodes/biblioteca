@@ -229,7 +229,7 @@ class SocioController extends Controller{
             //intentamos actualizar el socio
             try{
                 //primero validamos
-                if($errores = $libro->validate())
+                if($errores = $socio->validate())
                     throw new ValidationException(
                         "<br>".arrayToString($errores, false, false,".<br>")
                         );
